@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../../../../resources/static/styles.css">
     <title>Index</title>
 </head>
 <body>
 
 <div class="topnav">
-    <a class="active" href="index.html">Home</a>
-    <a href="PastAndPendingOrders.html">Past and Pending Orders</a>
-    <a href="Cart.html">Cart</a>
+    <a class="active" href="../../../../resources/static/index.html">Home</a>
+    <a href="../../../../resources/static/PastAndPendingOrders.html">Past and Pending Orders</a>
+    <a href="../../../../resources/static/Cart.html">Cart</a>
     <a class="logout" href="">Log Out</a>
 </div>
 
