@@ -7,9 +7,14 @@ import java.util.Map;
 @Controller
 public class IndexController {
 
-    @GetMapping("test")
+    @GetMapping("/")
+    public String home (Map<String, Object> model) {
+        model.put("message", "test");
+        return "index";
+    }
+    @GetMapping("thyme")
     public String greeting (Map<String, Object> model) {
-        model.put("message", "Hello Bryan");
-        return "test";
+        model.put("message", "test");
+        return "thyme";
     }
 }
