@@ -1,20 +1,63 @@
 package Group5Project.WebApp.controller;
+import Group5Project.WebApp.Data.Cart;
+import Group5Project.WebApp.Data.Menu;
+import Group5Project.WebApp.model.Item;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import static Group5Project.WebApp.Data.Cart.ItemsInCart;
+import static Group5Project.WebApp.Data.Menu.MenuItems;
 
 @Controller
 public class IndexController {
 
     @GetMapping("/")
     public String home (Map<String, Object> model) {
-        model.put("message", "test");
+
+        //for testing, replace with query to sql
+
+        MenuItems.clear();
+
+        Item item1 = new Item(1,"item1", 1, 10);
+
+        Item item2 = new Item(2,"item2", 1, 15);
+
+        MenuItems.add(item1);
+        MenuItems.add(item2);
+
+        model.put("MenuItems", MenuItems);
+
         return "index";
     }
-    @GetMapping("thyme")
-    public String greeting (Map<String, Object> model) {
-        model.put("message", "test");
-        return "thyme";
+//
+//    @GetMapping("index")
+//    public String Index(Map<String, Object> model)
+//    {
+//        return "index";
+//    }
+
+    @RequestMapping(value = "/AddToCart", method=RequestMethod.POST)
+    public String AddToCart(@ModelAttribute(value="Item") Item item) {
+
+        int ID = item.ID;
+
+        Item itemToAdd = MenuItems.stream().filter(i -> i.ID == ID).findFirst().get();
+
+        ItemsInCart.add(itemToAdd);
+
+        return "index";
     }
+
+
+
+
+
+//    @GetMapping("thyme")
+//    public String greeting (Map<String, Object> model) {
+//        model.put("message", "test");
+//        return "thyme";
+//    }
 }

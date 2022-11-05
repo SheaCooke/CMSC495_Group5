@@ -8,9 +8,9 @@
 <body>
 
 <div class="topnav">
-    <a class="active" href="index.html">Home</a>
-    <a href="PastAndPendingOrders.html">Past and Pending Orders</a>
-    <a href="Cart.html">Cart</a>
+    <a class="active" href="/">Home</a>
+    <a href="PastAndPendingOrders">Past and Pending Orders</a>
+    <a href="Cart">Cart</a>
     <a class="logout" href="">Log Out</a>
 </div>
 
@@ -18,13 +18,39 @@
     <h2>Home page</h2>
 
     <h4>Menu</h4>
-    <p th:text="${message}"></p>
-    <ul>
-        <li>Item 1 <a class="logout" href="">Add to cart</a></li>
-        <li>Item 2 <a class="logout" href="">Add to cart</a></li>
-        <li>Item 3 <a class="logout" href="">Add to cart</a></li>
-    </ul>
 
+<!--    <ul>-->
+<!--        <li>Item 1 <a class="logout" href="">Add to cart</a></li>-->
+<!--        <li>Item 2 <a class="logout" href="">Add to cart</a></li>-->
+<!--        <li>Item 3 <a class="logout" href="">Add to cart</a></li>-->
+<!--    </ul>-->
+
+</div>
+
+<div th:if="${not #lists.isEmpty(MenuItems)}">
+    <h2>Counts List</h2>
+    <table id="displayTable">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th> </th>
+        </tr>
+        <tr th:each="Item : ${MenuItems}">
+            <td th:text="${Item.ItemName}"></td>
+            <td th:text="${Item.Price}"></td>
+            <td> 1 </td>
+            <td>
+<!--                <button type="submit" name="AddToCart" th:value="${Item.ID}">Add to cart</button>-->
+<!--                <a th:href="@{/index/AddToCart/__${Item.ID}__}">-->
+<!--                    Add to cart-->
+<!--                </a>-->
+                <form th:action="@{/AddToCart}" th:object="${Item}" method="post">
+                    <button type="submit" th:name="action" th:value="out">check-out</button>
+                </form>
+            </td>
+        </tr>
+    </table>
 </div>
 
 </body>

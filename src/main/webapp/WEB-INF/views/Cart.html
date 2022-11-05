@@ -8,9 +8,9 @@
 <body>
 
 <div class="topnav">
-  <a href="index.html">Home</a>
-  <a href="PastAndPendingOrders.html">Past and Pending Orders</a>
-  <a class="active" href="Cart.html">Cart</a>
+  <a href="/">Home</a>
+  <a href="PastAndPendingOrders">Past and Pending Orders</a>
+  <a class="active" href="Cart">Cart</a>
   <a class="logout" href="">Log Out</a>
 </div>
 
@@ -20,6 +20,28 @@
   <p>Get items from local memory and display here</p>
 
 </div>
+
+<div th:if="${not #lists.isEmpty(ItemsInCart)}">
+  <h2>Counts List</h2>
+  <table id="displayTable">
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th> </th>
+      <th> </th>
+    </tr>
+    <tr th:each="Item : ${ItemsInCart}">
+      <td th:text="${Item.ItemName}"></td>
+      <td th:text="${Item.Price}"></td>
+      <td> 1 </td>
+      <td> <button type="submit" name="AddToCart" th:value="${Item.ID}">Remove</button> </td>
+      <td> <button type="submit" name="AddToCart" th:value="${Item.ID}">Add</button> </td>
+    </tr>
+  </table>
+</div>
+
+<button type="submit" name="AddToCart">Checkout</button>
 
 </body>
 </html>
