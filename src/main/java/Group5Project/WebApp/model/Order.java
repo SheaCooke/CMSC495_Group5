@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Order {
 
+    public UUID ID = java.util.UUID.randomUUID();
     public List<Item> ItemsInOrder = new ArrayList<>();
 
     public double TotalPrice;
@@ -12,7 +13,7 @@ public class Order {
 
     public Order(List<Item> items)
     {
-        this.ItemsInOrder = items;
+        this.ItemsInOrder = new ArrayList<Item>(items);
         this.TotalPrice = CalculateTotalPrice();
         this.EstimatedTimeToComplete = CalculateEstimatedTime();
     }
@@ -22,7 +23,7 @@ public class Order {
         double total = 0;
 
         for (Item item: ItemsInOrder) {
-            total += item.Price;
+            total += (item.Price * item.Quantity);
         }
 
         return total;

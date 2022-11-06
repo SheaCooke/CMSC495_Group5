@@ -34,14 +34,18 @@
     <tr th:each="Item : ${ItemsInCart}">
       <td th:text="${Item.ItemName}"></td>
       <td th:text="${Item.Price}"></td>
-      <td> 1 </td>
+      <td th:text="${Item.Quantity}"> </td>
       <td> <button type="submit" name="AddToCart" th:value="${Item.ID}">Remove</button> </td>
       <td> <button type="submit" name="AddToCart" th:value="${Item.ID}">Add</button> </td>
     </tr>
   </table>
 </div>
 
-<button type="submit" name="AddToCart">Checkout</button>
+<br>
+
+<form role="form" method="post" th:action="@{'/Checkout'}">
+  <button type="submit">Checkout</button>
+</form>
 
 </body>
 </html>

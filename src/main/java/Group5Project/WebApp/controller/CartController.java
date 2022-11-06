@@ -4,6 +4,7 @@ import Group5Project.WebApp.model.Item;
 import Group5Project.WebApp.model.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Map;
@@ -30,7 +31,7 @@ public class CartController {
         return "Cart";
     }
 
-    @RequestMapping(value="/Cart")
+    @PostMapping("/Checkout")
     public String Checkout() {
 
         Order order = new Order(ItemsInCart);
@@ -39,6 +40,6 @@ public class CartController {
 
         ItemsInCart.clear();
 
-        return "PastAndPendingOrders";
+        return "redirect:PastAndPendingOrders";
     }
 }
