@@ -54,11 +54,7 @@
 
                             var countDownDate = new Date(/*[[${Order.EstimatedCompletionDate}]]*/).getTime();
 
-                            console.log(countDownDate);
-
                             var index = [[${Order.ID}]];
-
-                            console.log(index);
 
                             var now = new Date().getTime();
 
@@ -73,8 +69,13 @@
                             if (distance < 0) {
                                 clearInterval(x);
                                 document.getElementById('timer-'+index).innerHTML = "Completed";
+
+                                //Remove Order from PendingOrders and add to CompletedOrders
+                                window.location = '/CompletedOrder/'+[[${Order.ID}]]; //should be replaced with post request
+
                             }
                         }, 1000);
+
                     </script>
 
                 </td>
@@ -108,7 +109,54 @@
 
     <p>Past orders</p>
 
+<div th:if="${not #lists.isEmpty(CompletedOrdersList)}">
+<table>
+    <tbody th:each="Order : ${CompletedOrdersList}">
 
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+
+    </tr>
+
+    <tr th:each="Item : ${Order.ItemsInOrder}">
+        <td th:text="${Item.ItemName}"></td>
+        <td th:text="${Item.Price}"></td>
+        <td th:text="${Item.Quantity}"></td>
+    </tr>
+    <tr>
+        <th>Total Price</th>
+        <th>Completed On</th>
+        <th>Order ID</th>
+    </tr>
+    <tr>
+        <td th:text="${Order.TotalPrice}"></td>
+        <td th:text="${Order.EstimatedCompletionDate}"></td>
+        <td th:text="${Order.ID}"></td>
+    </tr>
+    <br>
+    <br>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    </tbody>
+
+
+
+</table>
+
+</div>
 
 </body>
 </html>

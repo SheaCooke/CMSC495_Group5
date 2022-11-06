@@ -23,7 +23,7 @@ body {
 }
 
 .topnav a.active {
-    background-color: #04AA6D;
+    background-color: #FF9933;
     color: white;
 }
 
@@ -50,7 +50,7 @@ ul li:last-child {
 #displayTable {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    width: 50%;
 }
 
 #displayTable td, #displayTable th {
@@ -66,6 +66,10 @@ ul li:last-child {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #04AA6D;
+    background-color: #FF9933;
     color: white;
+}
+
+table, th, td {
+    border: 1px solid;
 }
