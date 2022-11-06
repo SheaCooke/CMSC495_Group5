@@ -39,16 +39,14 @@ public class IndexController {
 //        return "index";
 //    }
 
-    @RequestMapping(value = "/AddToCart", method=RequestMethod.POST)
-    public String AddToCart(@ModelAttribute(value="Item") Item item) {
-
-        int ID = item.ID;
+    @PostMapping("/AddToCart/{ID}")
+    public String AddToCart(@PathVariable final int ID) {
 
         Item itemToAdd = MenuItems.stream().filter(i -> i.ID == ID).findFirst().get();
 
         ItemsInCart.add(itemToAdd);
 
-        return "index";
+        return "redirect:/";
     }
 
 

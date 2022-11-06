@@ -45,8 +45,8 @@
 <!--                <a th:href="@{/index/AddToCart/__${Item.ID}__}">-->
 <!--                    Add to cart-->
 <!--                </a>-->
-                <form th:action="@{/AddToCart}" th:object="${Item}" method="post">
-                    <button type="submit" th:name="action" th:value="out">check-out</button>
+                <form role="form" method="post" th:object="${Item}" th:action="@{'/AddToCart/{ID}' (ID=${Item.ID})}">
+                    <button type="submit">Add To Cart</button>
                 </form>
             </td>
         </tr>
