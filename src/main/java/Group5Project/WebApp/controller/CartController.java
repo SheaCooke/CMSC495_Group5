@@ -19,13 +19,6 @@ public class CartController {
     @GetMapping("Cart")
     public String Cart (Map<String, Object> model) {
 
-//        Item item1 = new Item(1,"item1", 1, 10);
-//
-//        Item item2 = new Item(2,"item2", 1, 15);
-//
-//        ItemsInCart.add(item1);
-//        ItemsInCart.add(item2);
-//
         model.put("ItemsInCart", ItemsInCart);
 
         return "Cart";

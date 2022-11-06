@@ -70,6 +70,14 @@ ul li:last-child {
     color: white;
 }
 
+#lastRow {
+    background-color: #000000;
+}
+
+#lastRowCompleted {
+    background-color: #FF9933;
+}
+
 table, th, td {
     border: 1px solid;
 }

@@ -9,7 +9,6 @@ public class Order {
 
     public double TotalPrice;
 
-    //public int EstimatedTimeToComplete;
 
     public Date EstimatedCompletionDate;
 
@@ -17,7 +16,6 @@ public class Order {
     {
         this.ItemsInOrder = new ArrayList<Item>(items);
         this.TotalPrice = CalculateTotalPrice();
-        //this.EstimatedTimeToComplete = CalculateEstimatedTime();
         this.EstimatedCompletionDate = CalculateEstimatedDate();
     }
 
@@ -30,13 +28,6 @@ public class Order {
         }
 
         return total;
-    }
-
-    private int CalculateEstimatedTime()
-    {
-        int estimatedTimePerItem = 30; //estimating 30 seconds per item
-
-        return estimatedTimePerItem * ItemsInOrder.size();
     }
 
     private Date CalculateEstimatedDate()

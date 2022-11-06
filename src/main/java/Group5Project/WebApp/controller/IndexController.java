@@ -33,12 +33,6 @@ public class IndexController {
 
         return "index";
     }
-//
-//    @GetMapping("index")
-//    public String Index(Map<String, Object> model)
-//    {
-//        return "index";
-//    }
 
     @PostMapping("/AddToCart/{ID}")
     public String AddToCart(@PathVariable final int ID) {
@@ -50,13 +44,4 @@ public class IndexController {
         return "redirect:/";
     }
 
-
-
-
-
-//    @GetMapping("thyme")
-//    public String greeting (Map<String, Object> model) {
-//        model.put("message", "test");
-//        return "thyme";
-//    }
 }
