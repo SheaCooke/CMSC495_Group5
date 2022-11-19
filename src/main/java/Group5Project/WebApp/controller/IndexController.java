@@ -44,4 +44,11 @@ public class IndexController {
         return "redirect:/";
     }
 
+    @GetMapping("/login")
+    public String login (Map<String, Object> model) {
+
+
+        return "Login";
+    }
+
 }
