@@ -142,18 +142,17 @@
 </div>
 <div id="id01" class="modal">
 
-  <form class="modal-content animate" th:action="@{/login}" method="post">
+  <form class="modal-content animate" th:action="@{/process-login}" method="post">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="img_avatar2.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <label for="username"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="username" required>
 
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <label for="password"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="password" required>
 
       <button type="submit">Login</button>
 
@@ -171,18 +170,17 @@
   <form class="modal-content animate" action="/action_page.php" method="post">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="img_avatar2.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter new Username" name="uname" required>
+      <label for="newUsername"><b>Username</b></label>
+      <input type="text" placeholder="Enter new Username" name="newUsername" required>
 
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter new Password" name="psw" required>
+      <label for="newPassword"><b>Password</b></label>
+      <input type="password" placeholder="Enter new Password" name="newPassword" required>
 
-      <label for="psw"><b>Verify Password</b></label>
-      <input type="password" placeholder="Verify Password" name="psw" required>
+      <label for="verifyPassword"><b>Verify Password</b></label>
+      <input type="password" placeholder="Verify Password" name="verifyPassword" required>
 
       <button type="submit">Register</button>
 
