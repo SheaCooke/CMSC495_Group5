@@ -26,12 +26,14 @@ public class WebSecurityConfig  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+
                 .csrf()
                 .ignoringAntMatchers("/register")
                 .and()
                 .authorizeRequests((requests) -> requests
-                        .antMatchers(HttpMethod.POST, "/register").anonymous()
-                        .anyRequest().authenticated()
+                        .antMatchers("/admin").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.POST, "/register").anonymous().anyRequest().authenticated()
+
                 )
                 .formLogin((form) -> form
                         .loginPage("/Login")
@@ -59,7 +61,13 @@ public class WebSecurityConfig  {
                         .roles("USER")
                         .build();
 
-        return new InMemoryUserDetailsManager(user);
+        UserDetails admin = User.withDefaultPasswordEncoder()
+                .username("admin")
+                .password("admin")
+                .roles("ADMIN")
+                .build();
+//encoder().encode("adminPass")
+        return new InMemoryUserDetailsManager(user, admin);
     }
 
 //
