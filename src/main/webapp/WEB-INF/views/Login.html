@@ -167,20 +167,19 @@
 
 <div id="id02" class="modal">
 
-  <form class="modal-content animate" action="/action_page.php" method="post">
+  <form class="modal-content animate"  action="/register" th:object="${dto}" method="post">
+
     <div class="imgcontainer">
       <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
     </div>
 
     <div class="container">
-      <label for="newUsername"><b>Username</b></label>
-      <input type="text" placeholder="Enter new Username" name="newUsername" required>
 
-      <label for="newPassword"><b>Password</b></label>
-      <input type="password" placeholder="Enter new Password" name="newPassword" required>
+      <input type="text" placeholder="Enter new Username" th:field="*{email}" required>
 
-      <label for="verifyPassword"><b>Verify Password</b></label>
-      <input type="password" placeholder="Verify Password" name="verifyPassword" required>
+
+      <input type="password" placeholder="Enter new Password" th:field="*{password}" required>
+
 
       <button type="submit">Register</button>
 

@@ -1,6 +1,7 @@
 package Group5Project.WebApp.controller;
 import Group5Project.WebApp.Data.Cart;
 import Group5Project.WebApp.Data.Menu;
+import Group5Project.WebApp.Data.UserDto;
 import Group5Project.WebApp.model.Item;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,8 @@ public class IndexController {
 
         model.put("MenuItems", MenuItems);
 
+
+
         return "index";
     }
 
@@ -44,11 +47,6 @@ public class IndexController {
         return "redirect:/";
     }
 
-    @GetMapping("/Login")
-    public String login (Map<String, Object> model) {
 
-
-        return "Login";
-    }
 
 }
