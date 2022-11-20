@@ -78,6 +78,51 @@ public class IndexController {
         return "redirect:/";
     }
 
+    @PostMapping("/RemoveFromCart/{ID}")
+    public String DecramentItem(@PathVariable final UUID ID) {
+
+        boolean removeItem = false;
+
+        for (var i : ItemsInCart)
+        {
+            if (i.ID.equals(ID))
+            {
+                if (i.Quantity <= 1)
+                {
+
+                    removeItem = true;
+                    break;
+                }
+                else
+                {
+                    i.Quantity--;
+                }
+
+            }
+        }
+
+        if (removeItem)
+        {
+            RemoveItem(ID);
+        }
+
+        return "redirect:/Cart";
+    }
+
+    @PostMapping("/IncramentItem/{ID}")
+    public String IncramentItem(@PathVariable final UUID ID) {
+
+        for (var i : ItemsInCart)
+        {
+            if (i.ID.equals(ID))
+            {
+                i.Quantity++;
+            }
+        }
+
+        return "redirect:/Cart";
+    }
+
     public static boolean hasRole (String roleName)
     {
 //        return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
@@ -89,6 +134,11 @@ public class IndexController {
                 .anyMatch(r -> r.getAuthority().equals(roleName));
 
         return hasUserRole;
+    }
+
+    public static void RemoveItem(UUID ID)
+    {
+        ItemsInCart.removeIf(j -> j.ID.equals(ID));
     }
 
 

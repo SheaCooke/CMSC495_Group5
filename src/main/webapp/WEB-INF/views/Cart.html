@@ -35,8 +35,16 @@
       <td th:text="${Item.ItemName}"></td>
       <td th:text="${Item.Price}"></td>
       <td th:text="${Item.Quantity}"> </td>
-      <td> <button type="submit" name="AddToCart" th:value="${Item.ID}">Remove</button> </td>
-      <td> <button type="submit" name="AddToCart" th:value="${Item.ID}">Add</button> </td>
+      <td>
+        <form role="form" method="post" th:object="${Item}" th:action="@{'/RemoveFromCart/{ID}' (ID=${Item.ID})}">
+        <button type="submit" name="RemoveFromCart" th:value="${Item.ID}">Remove</button>
+        </form>
+      </td>
+      <td>
+        <form role="form" method="post" th:object="${Item}" th:action="@{'/IncramentItem/{ID}' (ID=${Item.ID})}">
+        <button type="submit" name="AddToCart" th:value="${Item.ID}">Add</button>
+        </form>
+      </td>
     </tr>
   </table>
 </div>

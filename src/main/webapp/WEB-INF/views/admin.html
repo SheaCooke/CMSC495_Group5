@@ -135,20 +135,8 @@
 </head>
 <body>
 
-<!--<div th:switch="${role}">-->
 
-<!--<div th:case="'USER'" class="topnav">-->
-<!--  <a href="/">Home</a>-->
-<!--  <a href="PastAndPendingOrders">Past and Pending Orders</a>-->
-<!--  <a class="active" href="Cart">Cart</a>-->
-<!--  <a class="logout" href="/Logout">Log Out</a>-->
-<!--</div>-->
 
-<!--  <div th:case="'ADMIN'" class="topnav">-->
-<!--    <a href="/">Home</a>-->
-
-<!--  </div>-->
-<!--</div>-->
 <div class="topnav">
   <a class="active" href="admin">Update Menu</a>
   <a href="query">Query Database</a>
@@ -160,8 +148,7 @@
 
 <div style="padding-left:16px">
 
-  <h2>Cart</h2>
-  <p>Get items from local memory and display here</p>
+  <h2>Items In Menu</h2>
 
 </div>
 
@@ -178,10 +165,41 @@
       <td th:text="${Item.ItemName}"></td>
       <td th:text="${Item.Price}"></td>
       <td>
-        <form role="form" method="post" th:object="${Item}" th:action="@{'/AddToCart/{ID}' (ID=${Item.ID})}">
-          <button type="submit">Modify</button>
+        <form th:action="/admin/AddNewItem/${Item.ID}" method="get">
+          <button type="button" onclick="document.getElementById('id02').style.display='block'">Modify</button>
         </form>
+
+
+
+
+<!--        <div id="id02" class="modal">-->
+
+<!--          <form class="modal-content animate" action="/admin/AddNewItem" th:object="${dto}" method="post">-->
+<!--            <div class="imgcontainer">-->
+<!--              <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>-->
+<!--            </div>-->
+
+<!--            <div class="container">-->
+
+<!--              <input type="text" th:value="${Item.ItemName}" placeholder="Enter Name" name="ItemName" required>-->
+
+
+<!--              <input type="text" th:value="${Item.Price}" placeholder="Enter Price" name="ItemPrice" required>-->
+
+
+<!--              <button class="buttonClass" type="submit">Save</button>-->
+
+<!--            </div>-->
+
+<!--            <div class="container" style="background-color:#f1f1f1">-->
+<!--              <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>-->
+<!--            </div>-->
+<!--          </form>-->
+<!--        </div>-->
+
+
       </td>
+
     </tr>
   </table>
 </div>
@@ -212,6 +230,9 @@
     </div>
   </form>
 </div>
+
+
+
 
 
 
