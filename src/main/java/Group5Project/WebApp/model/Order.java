@@ -9,14 +9,17 @@ public class Order {
 
     public double TotalPrice;
 
+    public String userName;
+
 
     public Date EstimatedCompletionDate;
 
-    public Order(List<Item> items)
+    public Order(List<Item> items, String userName)
     {
         this.ItemsInOrder = new ArrayList<Item>(items);
         this.TotalPrice = CalculateTotalPrice();
         this.EstimatedCompletionDate = CalculateEstimatedDate();
+        this.userName = userName;
     }
 
     private double CalculateTotalPrice()

@@ -1,5 +1,6 @@
 package Group5Project.WebApp.controller;
 
+import Group5Project.WebApp.Data.CurrentUser;
 import Group5Project.WebApp.model.Item;
 import Group5Project.WebApp.model.Order;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class CartController {
     @PostMapping("/Checkout")
     public String Checkout() {
 
-        Order order = new Order(ItemsInCart);
+        Order order = new Order(ItemsInCart, CurrentUser.currentUserName);
 
         CurrentPendingOrders.add(order);
 

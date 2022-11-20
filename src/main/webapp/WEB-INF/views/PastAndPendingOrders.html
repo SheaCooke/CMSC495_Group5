@@ -13,7 +13,7 @@
     <a href="/">Home</a>
     <a class="active" href="PastAndPendingOrders">Past and Pending Orders</a>
     <a href="Cart">Cart</a>
-    <a class="logout" href="">Log Out</a>
+    <a class="logout" href="/Logout">Log Out</a>
 </div>
 
 
@@ -24,6 +24,8 @@
 
         <table id="displayTable">
             <tbody th:each="Order : ${CurrentPendingOrders}">
+
+
 
             <tr>
                 <th>Name</th>

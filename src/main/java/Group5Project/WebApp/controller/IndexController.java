@@ -1,8 +1,11 @@
 package Group5Project.WebApp.controller;
 import Group5Project.WebApp.Data.Cart;
+import Group5Project.WebApp.Data.CurrentUser;
 import Group5Project.WebApp.Data.Menu;
 import Group5Project.WebApp.Data.UserDto;
 import Group5Project.WebApp.model.Item;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +35,19 @@ public class IndexController {
 
         model.put("MenuItems", MenuItems);
 
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        String username = "";
+
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        CurrentUser.currentUserName = username;
+
+        model.put("un", username);
 
         return "index";
     }

@@ -1,5 +1,6 @@
 package Group5Project.WebApp.controller;
 
+import Group5Project.WebApp.Data.CurrentUser;
 import Group5Project.WebApp.model.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static Group5Project.WebApp.Data.Cart.ItemsInCart;
 import static Group5Project.WebApp.Data.CompletedOrders.CompletedOrdersList;
@@ -18,8 +20,8 @@ public class PastAndPendingOrdersController {
 
     @GetMapping("PastAndPendingOrders")
     public String PastAndPendingOrders (Map<String, Object> model) {
-        model.put("CurrentPendingOrders", CurrentPendingOrders);
-        model.put("CompletedOrdersList", CompletedOrdersList);
+        model.put("CurrentPendingOrders", CurrentPendingOrders.stream().filter(p -> p.userName.equals(CurrentUser.currentUserName)).collect(Collectors.toList()));
+        model.put("CompletedOrdersList", CompletedOrdersList.stream().filter(p -> p.userName.equals(CurrentUser.currentUserName)).collect(Collectors.toList()));
         return "PastAndPendingOrders";
     }
 

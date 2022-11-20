@@ -13,9 +13,12 @@
     <a href="Cart">Cart</a>
     <a class="logout" href="/Logout">Log Out</a>
 </div>
+<p th:text="'Welcome ' + ${un} + '!'"></p>
 
 <div style="padding-left:16px">
     <h2>Home page</h2>
+
+
 
     <h4>Menu</h4>
 
@@ -34,7 +37,6 @@
             <td th:text="${Item.Price}"></td>
             <td> 1 </td>
             <td>
-
                 <form role="form" method="post" th:object="${Item}" th:action="@{'/AddToCart/{ID}' (ID=${Item.ID})}">
                     <button type="submit">Add To Cart</button>
                 </form>
