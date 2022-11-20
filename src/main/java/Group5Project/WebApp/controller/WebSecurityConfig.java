@@ -32,6 +32,9 @@ public class WebSecurityConfig  {
                 .and()
                 .authorizeRequests((requests) -> requests
                         .antMatchers("/admin").hasRole("ADMIN")
+                        .antMatchers("/query").hasRole("ADMIN")
+                        .antMatchers("/Cart").hasRole("USER")
+                        .antMatchers("/PastAndPendingOrders").hasRole("USER")
                         .antMatchers(HttpMethod.POST, "/register").anonymous().anyRequest().authenticated()
 
                 )

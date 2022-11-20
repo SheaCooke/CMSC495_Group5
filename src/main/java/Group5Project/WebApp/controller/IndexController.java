@@ -4,6 +4,7 @@ import Group5Project.WebApp.Data.CurrentUser;
 import Group5Project.WebApp.Data.Menu;
 import Group5Project.WebApp.Data.UserDto;
 import Group5Project.WebApp.model.Item;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -49,6 +50,17 @@ public class IndexController {
 
         model.put("un", username);
 
+        model.put("role", "USER");
+
+        if (hasRole("ROLE_ADMIN"))
+        {
+            model.put("role", "ADMIN");
+
+            return "admin";
+        }
+
+
+
         return "index";
     }
 
@@ -60,6 +72,19 @@ public class IndexController {
         addItem(itemToAdd);
 
         return "redirect:/";
+    }
+
+    public static boolean hasRole (String roleName)
+    {
+//        return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+//                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(roleName));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasUserRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals(roleName));
+
+        return hasUserRole;
     }
 
 
