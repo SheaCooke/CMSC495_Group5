@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Properties;
 
-
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @NoArgsConstructor
 @Configuration
 @EnableWebSecurity
@@ -28,11 +29,11 @@ public class WebSecurityConfig  {
         http
 
                 .csrf()
-                .ignoringAntMatchers("/register")
+                .ignoringAntMatchers("/register", "/admin/AddNewItem")
                 .and()
                 .authorizeRequests((requests) -> requests
                         .antMatchers("/admin").hasRole("ADMIN")
-                        .antMatchers("/admin/AddNewItem").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.POST,"/admin/AddNewItem").hasRole("ADMIN")
                         .antMatchers("/query").hasRole("ADMIN")
                         .antMatchers("/Cart").hasRole("USER")
                         .antMatchers("/PastAndPendingOrders").hasRole("USER")

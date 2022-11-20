@@ -52,7 +52,7 @@ public class AdminController {
 
         MenuItems.add(newItem);
 
-        return "admin";
+        return "redirect:/admin";
 
     }
 

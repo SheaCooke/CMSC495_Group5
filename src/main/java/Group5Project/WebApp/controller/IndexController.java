@@ -26,14 +26,19 @@ public class IndexController {
 
         //for testing, replace with query to sql
 
-        MenuItems.clear();
+        //MenuItems.clear();
 
-        Item item1 = new Item("item1", 1, 10);
+        if (MenuItems.size() == 0)
+        {
+            Item item1 = new Item("item1", 1, 10);
 
-        Item item2 = new Item("item2", 1, 15);
+            Item item2 = new Item("item2", 1, 15);
 
-        MenuItems.add(item1);
-        MenuItems.add(item2);
+            MenuItems.add(item1);
+            MenuItems.add(item2);
+        }
+
+
 
         model.put("MenuItems", MenuItems);
 
@@ -57,10 +62,8 @@ public class IndexController {
         {
             model.put("role", "ADMIN");
 
-            return "redirect:/admin";
+            return "admin";
         }
-
-
 
         return "index";
     }
