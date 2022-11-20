@@ -166,6 +166,7 @@
 </div>
 
 
+
 <div th:if="${not #lists.isEmpty(MenuItems)}">
   <table id="displayTable">
     <tr>
@@ -189,17 +190,18 @@
 
 <div id="id01" class="modal">
 
-  <form class="modal-content animate" th:action="@{/process-login}" method="post">
+  <form class="modal-content animate" action="/admin/AddNewItem" th:object="${dto}" method="post">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
     </div>
 
     <div class="container">
-      <label for="ItemName"><b>Item Name</b></label>
-      <input type="text" placeholder="Item Name" name="ItemName" required>
 
-      <label for="Price"><b>Price</b></label>
-      <input type="text" placeholder="Enter Price" name="Price" required>
+      <input type="text" placeholder="Enter Name" name="ItemName" required>
+
+
+      <input type="text" placeholder="Enter Price" name="ItemPrice" required>
+
 
       <button class="buttonClass" type="submit">Save</button>
 
@@ -213,9 +215,9 @@
 
 
 
-<form role="form" method="post" th:action="@{'/Checkout'}">
-  <button class="buttonClass" type="submit"  style="width:auto;">Submit Changes</button>
-</form>
+<!--<form role="form" method="post" th:action="@{'/Checkout'}">-->
+<!--  <button class="buttonClass" type="submit"  style="width:auto;">Submit Changes</button>-->
+<!--</form>-->
 
 </body>
 </html>

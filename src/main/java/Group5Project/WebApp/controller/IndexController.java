@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static Group5Project.WebApp.Data.Cart.ItemsInCart;
@@ -27,9 +28,9 @@ public class IndexController {
 
         MenuItems.clear();
 
-        Item item1 = new Item(1,"item1", 1, 10);
+        Item item1 = new Item("item1", 1, 10);
 
-        Item item2 = new Item(2,"item2", 1, 15);
+        Item item2 = new Item("item2", 1, 15);
 
         MenuItems.add(item1);
         MenuItems.add(item2);
@@ -56,7 +57,7 @@ public class IndexController {
         {
             model.put("role", "ADMIN");
 
-            return "admin";
+            return "redirect:/admin";
         }
 
 
@@ -65,9 +66,9 @@ public class IndexController {
     }
 
     @PostMapping("/AddToCart/{ID}")
-    public String AddToCart(@PathVariable final int ID) {
+    public String AddToCart(@PathVariable final UUID ID) {
 
-        Item itemToAdd = MenuItems.stream().filter(i -> i.ID == ID).findFirst().get();
+        Item itemToAdd = MenuItems.stream().filter(i -> i.ID.equals(ID)).findFirst().get();
 
         addItem(itemToAdd);
 

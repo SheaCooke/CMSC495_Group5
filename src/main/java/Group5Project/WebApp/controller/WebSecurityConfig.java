@@ -32,6 +32,7 @@ public class WebSecurityConfig  {
                 .and()
                 .authorizeRequests((requests) -> requests
                         .antMatchers("/admin").hasRole("ADMIN")
+                        .antMatchers("/admin/AddNewItem").hasRole("ADMIN")
                         .antMatchers("/query").hasRole("ADMIN")
                         .antMatchers("/Cart").hasRole("USER")
                         .antMatchers("/PastAndPendingOrders").hasRole("USER")
