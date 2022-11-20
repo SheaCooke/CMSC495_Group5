@@ -3,6 +3,7 @@ package Group5Project.WebApp.controller;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -25,8 +26,11 @@ public class WebSecurityConfig  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((requests) -> requests
-                        .antMatchers().permitAll()
+                .csrf()
+                .ignoringAntMatchers("/register")
+                .and()
+                .authorizeRequests((requests) -> requests
+                        .antMatchers(HttpMethod.POST, "/register").anonymous()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -44,10 +48,10 @@ public class WebSecurityConfig  {
     }
 
 
-
-
     @Bean
-    public UserDetailsService userDetailsService() {
+    public InMemoryUserDetailsManager userDetailsService() {
+
+
         UserDetails user =
                 User.withDefaultPasswordEncoder()
                         .username("user")
@@ -57,6 +61,7 @@ public class WebSecurityConfig  {
 
         return new InMemoryUserDetailsManager(user);
     }
+
 //
 //    @Override
 //    protected void configure(final HttpSecurity http) throws Exception {

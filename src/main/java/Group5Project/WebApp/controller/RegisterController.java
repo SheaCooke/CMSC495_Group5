@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -27,6 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+import java.util.ArrayList;
+
 import static Group5Project.WebApp.Data.Authorities.grantedAuthorities;
 import static Group5Project.WebApp.Data.Cart.ItemsInCart;
 import static Group5Project.WebApp.Data.PendingOrders.CurrentPendingOrders;
@@ -35,10 +38,10 @@ import static Group5Project.WebApp.Data.PendingOrders.CurrentPendingOrders;
 @Controller
 public class RegisterController {
 
-
-//    private InMemoryUserDetailsManager inMemoryUserDetailsManager;
+    @Autowired
+   private InMemoryUserDetailsManager inMemoryUserDetailsManager;
 //
-//    @Autowired
+//
 //    public RegisterController(InMemoryUserDetailsManager inMemoryUserDetailsManager) {
 //        this.inMemoryUserDetailsManager = inMemoryUserDetailsManager;
 //    }
@@ -50,21 +53,22 @@ public class RegisterController {
     public String Register(Model model, UserDto dto) {
 
         //make sure no one is currently logged in
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if (auth != null) {
 
-            grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
+          //  grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
 
-            UserDetails user = new User(dto.getEmail(), dto.getPassword(), grantedAuthorities);
+            //UserDetails user = new User("test", "test", grantedAuthorities);
 
 //            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, grantedAuthorities);
 //
 //            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-           // inMemoryUserDetailsManager.createUser(user);
+              //  inMemoryUserDetailsManager.createUser();
 
-        }
+        User.UserBuilder user = User.withDefaultPasswordEncoder();
+
+
+        inMemoryUserDetailsManager.createUser(user.username(dto.getEmail()).password(dto.getPassword()).roles("USER").build());
 
         return "redirect:Login";
     }
