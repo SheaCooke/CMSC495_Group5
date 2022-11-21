@@ -1,8 +1,5 @@
 package Group5Project.WebApp.controller;
-import Group5Project.WebApp.Data.Cart;
-import Group5Project.WebApp.Data.CurrentUser;
-import Group5Project.WebApp.Data.Menu;
-import Group5Project.WebApp.Data.UserDto;
+import Group5Project.WebApp.Data.*;
 import Group5Project.WebApp.model.Item;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,8 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static Group5Project.WebApp.Data.Cart.ItemsInCart;
-import static Group5Project.WebApp.Data.Cart.addItem;
+
 import static Group5Project.WebApp.Data.Menu.MenuItems;
 
 @Controller
@@ -37,8 +33,6 @@ public class IndexController {
             MenuItems.add(item1);
             MenuItems.add(item2);
         }
-        //create new current user object
-
 
         model.put("MenuItems", MenuItems);
 
@@ -53,6 +47,10 @@ public class IndexController {
         }
 
         CurrentUser.currentUserName = username;
+
+        Cart cart = new Cart(username);
+
+        CartCollection.AllCarts.add(cart);
 
         model.put("un", username);
 
@@ -73,7 +71,9 @@ public class IndexController {
 
         Item itemToAdd = MenuItems.stream().filter(i -> i.ID.equals(ID)).findFirst().get();
 
-        addItem(itemToAdd);
+        Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
+
+        cartToModoify.addItem(itemToAdd);
 
         return "redirect:/";
     }
@@ -83,7 +83,9 @@ public class IndexController {
 
         boolean removeItem = false;
 
-        for (var i : ItemsInCart)
+        Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
+
+        for (var i : cartToModoify.ItemsInCart)
         {
             if (i.ID.equals(ID))
             {
@@ -112,7 +114,9 @@ public class IndexController {
     @PostMapping("/IncramentItem/{ID}")
     public String IncramentItem(@PathVariable final UUID ID) {
 
-        for (var i : ItemsInCart)
+        Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
+
+        for (var i : cartToModoify.ItemsInCart)
         {
             if (i.ID.equals(ID))
             {
@@ -138,7 +142,14 @@ public class IndexController {
 
     public static void RemoveItem(UUID ID)
     {
-        ItemsInCart.removeIf(j -> j.ID.equals(ID));
+        Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
+
+        cartToModoify.ItemsInCart.removeIf(j -> j.ID.equals(ID));
+    }
+
+    public static Cart GetCartByUserName(String username)
+    {
+        return CartCollection.AllCarts.stream().filter(i -> i.UserName.equals(username)).findFirst().get();
     }
 
 

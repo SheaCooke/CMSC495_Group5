@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import static Group5Project.WebApp.Data.Cart.ItemsInCart;
+
 import static Group5Project.WebApp.Data.PendingOrders.CurrentPendingOrders;
 
 public class Authorities {

@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static Group5Project.WebApp.Data.Cart.ItemsInCart;
+
 import static Group5Project.WebApp.Data.CompletedOrders.CompletedOrdersList;
 import static Group5Project.WebApp.Data.PendingOrders.CurrentPendingOrders;
 

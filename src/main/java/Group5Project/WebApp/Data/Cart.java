@@ -5,9 +5,11 @@ import java.util.List;
 
 public class Cart {
 
-    public static List<Item> ItemsInCart = new ArrayList<Item>();
+    public List<Item> ItemsInCart = new ArrayList<Item>();
 
-    public static boolean addItem(Item itemToAdd)
+    public String UserName = "";
+
+    public boolean addItem(Item itemToAdd)
     {
         for (var item : ItemsInCart)
         {
@@ -21,6 +23,11 @@ public class Cart {
         ItemsInCart.add(itemToAdd);
 
         return true;
+    }
+
+    public Cart(String userName)
+    {
+        this.UserName = userName;
     }
 
 }

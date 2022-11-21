@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static Group5Project.WebApp.Data.Cart.ItemsInCart;
-import static Group5Project.WebApp.Data.Cart.addItem;
 import static Group5Project.WebApp.Data.Menu.MenuItems;
 
 @Controller

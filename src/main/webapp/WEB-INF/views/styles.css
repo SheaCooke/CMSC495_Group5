@@ -23,7 +23,7 @@ body {
 }
 
 .topnav a.active {
-    background-color: #04AA6D;
+    background-color: #FF9933;
     color: white;
 }
 
@@ -46,3 +46,39 @@ ul li {
 ul li:last-child {
     border-bottom: none
 }
+
+#displayTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+}
+
+#displayTable td, #displayTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#displayTable tr:nth-child(even){background-color: #f2f2f2;}
+
+#displayTable tr:hover {background-color: #ddd;}
+
+#displayTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #FF9933;
+    color: white;
+}
+
+#lastRow {
+    background-color: #000000;
+}
+
+#lastRowCompleted {
+    background-color: #FF9933;
+}
+
+table, th, td {
+    border: 1px solid;
+}
+

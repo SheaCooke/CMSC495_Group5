@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
 import static Group5Project.WebApp.Data.Authorities.grantedAuthorities;
-import static Group5Project.WebApp.Data.Cart.ItemsInCart;
+
 import static Group5Project.WebApp.Data.PendingOrders.CurrentPendingOrders;
 
 @NoArgsConstructor
