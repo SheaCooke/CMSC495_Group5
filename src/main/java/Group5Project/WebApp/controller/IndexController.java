@@ -37,7 +37,7 @@ public class IndexController {
             MenuItems.add(item1);
             MenuItems.add(item2);
         }
-
+        //create new current user object
 
 
         model.put("MenuItems", MenuItems);

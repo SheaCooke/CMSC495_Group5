@@ -165,38 +165,10 @@
       <td th:text="${Item.ItemName}"></td>
       <td th:text="${Item.Price}"></td>
       <td>
-        <form th:action="/admin/AddNewItem/${Item.ID}" method="get">
-          <button type="button" onclick="document.getElementById('id02').style.display='block'">Modify</button>
+
+        <form role="form" method="post" th:object="${Item}" th:action="@{'/admin/DeleteItem/{ID}' (ID=${Item.ID})}">
+          <button type="submit">Delete</button>
         </form>
-
-
-
-
-<!--        <div id="id02" class="modal">-->
-
-<!--          <form class="modal-content animate" action="/admin/AddNewItem" th:object="${dto}" method="post">-->
-<!--            <div class="imgcontainer">-->
-<!--              <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>-->
-<!--            </div>-->
-
-<!--            <div class="container">-->
-
-<!--              <input type="text" th:value="${Item.ItemName}" placeholder="Enter Name" name="ItemName" required>-->
-
-
-<!--              <input type="text" th:value="${Item.Price}" placeholder="Enter Price" name="ItemPrice" required>-->
-
-
-<!--              <button class="buttonClass" type="submit">Save</button>-->
-
-<!--            </div>-->
-
-<!--            <div class="container" style="background-color:#f1f1f1">-->
-<!--              <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>-->
-<!--            </div>-->
-<!--          </form>-->
-<!--        </div>-->
-
 
       </td>
 
@@ -232,6 +204,33 @@
 </div>
 
 
+<button class="buttonClass" onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Modify Existing</button>
+
+
+<div id="id02" class="modal">
+
+  <form class="modal-content animate" action="/admin/UpdateItem" th:object="${dto}" method="post">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+    </div>
+
+    <div class="container">
+
+      <input type="text" placeholder="Name of item to modify" name="ItemName" required>
+
+
+      <input type="text" placeholder="New Price" name="ItemPrice" required>
+
+
+      <button class="buttonClass" type="submit">Save</button>
+
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </form>
+</div>
 
 
 

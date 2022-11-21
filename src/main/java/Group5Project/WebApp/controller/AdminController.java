@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static Group5Project.WebApp.Data.Cart.ItemsInCart;
@@ -54,6 +55,32 @@ public class AdminController {
 
         return "redirect:/admin";
 
+    }
+
+    @PostMapping("/admin/UpdateItem")
+    public String UpdateItem(Model model, ItemDto dto) {
+
+        double price = tryParseDouble(dto.getItemPrice(), 0.0);
+
+        String name = dto.getItemName();
+
+        for (var i : MenuItems)
+        {
+            if (i.ItemName.equals(name))
+            {
+                i.Price = price;
+            }
+        }
+
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admin/DeleteItem/{ID}")
+    public String DeleteItem(@PathVariable final UUID ID) {
+
+        MenuItems.removeIf(i -> i.ID.equals(ID));
+
+        return "redirect:/admin";
     }
 
     public double tryParseDouble(String value, double defaultVal) {
