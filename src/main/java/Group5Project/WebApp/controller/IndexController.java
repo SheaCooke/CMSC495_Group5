@@ -48,9 +48,13 @@ public class IndexController {
 
         CurrentUser.currentUserName = username;
 
-        Cart cart = new Cart(username);
+        if(!CartExists(username))
+        {
+            Cart cart = new Cart(username);
 
-        CartCollection.AllCarts.add(cart);
+            CartCollection.AllCarts.add(cart);
+        }
+
 
         model.put("un", username);
 
@@ -149,7 +153,20 @@ public class IndexController {
 
     public static Cart GetCartByUserName(String username)
     {
-        return CartCollection.AllCarts.stream().filter(i -> i.UserName.equals(username)).findFirst().get();
+        if (CartExists(username))
+        {
+            return CartCollection.AllCarts.stream().filter(i -> i.UserName.equals(username)).findFirst().get();
+        }
+        else
+        {
+            return new Cart(CurrentUser.currentUserName);
+        }
+
+    }
+
+    public static boolean CartExists(String username)
+    {
+        return CartCollection.AllCarts.stream().filter(i -> i.UserName.equals(username)).findFirst().isPresent();
     }
 
 

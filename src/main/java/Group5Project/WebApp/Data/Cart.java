@@ -11,16 +11,16 @@ public class Cart {
 
     public boolean addItem(Item itemToAdd)
     {
-        for (var item : ItemsInCart)
+        for (var item : this.ItemsInCart)
         {
-            if (item.ItemName.equals(itemToAdd.ItemName))
+            if (item.ID.equals(itemToAdd.ID))
             {
                 item.Quantity += 1;
                 return true;
             }
         }
 
-        ItemsInCart.add(itemToAdd);
+        this.ItemsInCart.add(itemToAdd);
 
         return true;
     }

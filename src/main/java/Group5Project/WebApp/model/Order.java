@@ -11,7 +11,6 @@ public class Order {
 
     public String userName;
 
-
     public Date EstimatedCompletionDate;
 
     public Order(List<Item> items, String userName)

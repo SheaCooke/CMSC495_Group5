@@ -25,8 +25,6 @@
         <table id="displayTable">
             <tbody th:each="Order : ${CurrentPendingOrders}">
 
-
-
             <tr>
                 <th>Name</th>
                 <th>Price</th>
@@ -111,10 +109,10 @@
 
     </tr>
 
-    <tr th:each="Item : ${Order.ItemsInOrder}">
-        <td th:text="${Item.ItemName}"></td>
-        <td th:text="${Item.Price}"></td>
-        <td th:text="${Item.Quantity}"></td>
+    <tr th:each="Item2 : ${Order.ItemsInOrder}">
+        <td th:text="${Item2.ItemName}"></td>
+        <td th:text="${Item2.Price}"></td>
+        <td th:text="${Item2.Quantity}"></td>
     </tr>
     <tr>
         <th>Total Price</th>
