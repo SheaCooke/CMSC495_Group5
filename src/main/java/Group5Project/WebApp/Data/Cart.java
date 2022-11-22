@@ -13,7 +13,7 @@ public class Cart {
     {
         for (var item : this.ItemsInCart)
         {
-            if (item.ID.equals(itemToAdd.ID))
+            if (item.ItemName.equals(itemToAdd.ItemName))
             {
                 item.Quantity += 1;
                 return true;

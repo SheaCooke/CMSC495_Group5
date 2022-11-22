@@ -73,7 +73,9 @@ public class IndexController {
     @PostMapping("/AddToCart/{ID}")
     public String AddToCart(@PathVariable final UUID ID) {
 
-        Item itemToAdd = MenuItems.stream().filter(i -> i.ID.equals(ID)).findFirst().get();
+        Item itemToClone = MenuItems.stream().filter(i -> i.ID.equals(ID)).findFirst().get();
+
+        Item itemToAdd = new Item(itemToClone.ItemName, 1, itemToClone.Price);
 
         Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
 
