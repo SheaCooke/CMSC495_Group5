@@ -17,9 +17,9 @@
 </div>
 
 
-    <h2>Past and Pending Orders</h2>
+    <h2 style="text-align: center;">Past and Pending Orders</h2>
 
-    <p>pending orders</p>
+    <p style="text-align: center;">pending orders</p>
     <div th:if="${not #lists.isEmpty(CurrentPendingOrders)}">
 
         <table id="displayTable">
@@ -96,7 +96,7 @@
 
     </div>
 
-    <p>Past orders</p>
+    <p style="text-align: center;">Past orders</p>
 
 <div th:if="${not #lists.isEmpty(CompletedOrdersList)}">
 <table>

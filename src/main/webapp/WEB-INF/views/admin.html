@@ -139,14 +139,14 @@
 
 <div class="topnav">
   <a class="active" href="admin">Update Menu</a>
-  <a href="query">Query Database</a>
+  <a href="admin">Query Database</a>
   <a class="logout" href="/Logout">Log Out</a>
 </div>
-<p th:text="'Welcome ' + ${un} + '!'"></p>
 
 
+<div style="text-align: center;">
 
-<div style="padding-left:16px">
+  <p th:text="'Welcome ' + ${un} + '!'"></p>
 
   <h2>Items In Menu</h2>
 
@@ -176,7 +176,9 @@
   </table>
 </div>
 
+<div class="wrapper">
 <button class="buttonClass" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Create New Item</button>
+</div>
 
 <div id="id01" class="modal">
 
@@ -203,9 +205,9 @@
   </form>
 </div>
 
-
+<div class="wrapper">
 <button class="buttonClass" onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Modify Existing</button>
-
+</div>
 
 <div id="id02" class="modal">
 

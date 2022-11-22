@@ -14,15 +14,14 @@
   <a class="logout" href="/Logout">Log Out</a>
 </div>
 
-<div style="padding-left:16px">
+<div style="text-align: center;">
 
-  <h2>Cart</h2>
-  <p>Get items from local memory and display here</p>
+  <h2>Items in cart</h2>
+
 
 </div>
 
 <div th:if="${not #lists.isEmpty(ItemsInCart)}">
-  <h2>Counts List</h2>
   <table id="displayTable">
     <tr>
       <th>Name</th>
@@ -50,10 +49,11 @@
 </div>
 
 <br>
-
+<div class="wrapper">
 <form role="form" method="post" th:action="@{'/Checkout'}">
-  <button type="submit">Checkout</button>
+  <button style="text-align: center;" type="submit">Checkout</button>
 </form>
+</div>
 
 </body>
 </html>
