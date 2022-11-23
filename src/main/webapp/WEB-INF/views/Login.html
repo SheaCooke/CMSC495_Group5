@@ -198,6 +198,19 @@
   </form>
 </div>
 
+
+<div class="center" th:if="${not #lists.isEmpty(errors)}">
+
+  <p>Registration failed for the following reasons:</p>
+
+  <div th:each="message : ${errors}">
+
+    <p th:text="${message}"></p>
+
+  </div>
+
+</div>
+
 <script>
   // Get the modal
   var modal = document.getElementById('id01');
@@ -209,6 +222,8 @@
     }
   }
 </script>
+
+
 
 </body>
 </html>

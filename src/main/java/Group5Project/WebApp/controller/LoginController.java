@@ -32,20 +32,5 @@ public class LoginController {
 //        return "Login";
 //    }
 
-    @GetMapping("/Login")
-    public String login (Model model) {
 
-        model.addAttribute("dto", new UserDto());
-
-        return "Login";
-    }
-
-    @RequestMapping(value="/Logout", method = RequestMethod.GET)
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-        return "redirect:Login";
-    }
 }
