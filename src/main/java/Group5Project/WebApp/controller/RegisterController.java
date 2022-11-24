@@ -33,6 +33,8 @@ public class RegisterController {
 
     private List<String> errorMessages = new ArrayList<String>();
 
+    private UserDto _dto = new UserDto();
+
 //
 //
 //    public RegisterController(InMemoryUserDetailsManager inMemoryUserDetailsManager) {
@@ -42,7 +44,7 @@ public class RegisterController {
     @GetMapping("/Login")
     public String login (Model model) {
 
-        model.addAttribute("dto", new UserDto());
+        model.addAttribute("dto", _dto);
         model.addAttribute("errors", errorMessages);
 
         return "Login";
@@ -50,6 +52,10 @@ public class RegisterController {
 
     @RequestMapping(value="/Logout", method = RequestMethod.GET)
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+
+        errorMessages.clear();
+        _dto = new UserDto();
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
@@ -63,8 +69,10 @@ public class RegisterController {
     @PostMapping("/register")
     public String Register(Model model, UserDto dto) {
 
+        _dto = dto;
 
-        //errorMessages.clear();
+
+        errorMessages.clear();
 
           //  grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
 
@@ -90,11 +98,13 @@ public class RegisterController {
 
             inMemoryUserDetailsManager.createUser(user.username(dto.getUsername()).password(dto.getPassword()).roles("USER").build());
 
+            _dto = new UserDto();
+
         }
-        else
-        {
-            model.addAttribute("dto", new UserDto());
-        }
+//        else
+//        {
+//            model.addAttribute("dto", dto);
+//        }
 
 
         validRegistrationInformation = true;
@@ -147,7 +157,8 @@ public class RegisterController {
 
     private boolean UsernameAvailable(String username)
     {
-        return !UserModelCollection.Users.stream().filter(i -> i.getUsername().equals(username)).findFirst().isPresent();
+        return !UserModelCollection.Users.stream().filter(i -> i.getUsername().toLowerCase().equals(username.toLowerCase()))
+                .findFirst().isPresent();
     }
 
     private boolean UMGCEmail(String email)
