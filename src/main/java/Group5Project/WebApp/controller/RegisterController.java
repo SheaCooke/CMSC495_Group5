@@ -63,14 +63,12 @@ public class RegisterController {
         return "redirect:Login";
     }
 
-
-
-
     @PostMapping("/register")
     public String Register(Model model, UserDto dto) {
 
         _dto = dto;
 
+        trimDTOFields(_dto);
 
         errorMessages.clear();
 
@@ -112,7 +110,6 @@ public class RegisterController {
 
         return "redirect:Login";
 
-
     }
 
     private void InformationIsValid(String password, String verifyPassword, String username, String email, String studentID)
@@ -123,11 +120,17 @@ public class RegisterController {
             errorMessages.add("Passwords do not match");
         }
 
-        if (!UsernameAvailable(username))
+        if (username.length() < 3)
+        {
+            validRegistrationInformation = false;
+            errorMessages.add("Username must be at least 3 characters long");
+        }
+        else if (!UsernameAvailable(username))
         {
             validRegistrationInformation = false;
             errorMessages.add("Username is unavailable");
         }
+
 
         if (!UMGCEmail(email))
         {
@@ -208,6 +211,15 @@ public class RegisterController {
         } catch (NumberFormatException e) {
             return -1;
         }
+    }
+
+    private void trimDTOFields(UserDto dto)
+    {
+        dto.setEmail(dto.getEmail().trim());
+        dto.setPassword(dto.getPassword().trim());
+        dto.setVerifyPassword(dto.getVerifyPassword().trim());
+        dto.setStudentID(dto.getStudentID().trim());
+        dto.setUsername(dto.getUsername().trim());
     }
 
 }

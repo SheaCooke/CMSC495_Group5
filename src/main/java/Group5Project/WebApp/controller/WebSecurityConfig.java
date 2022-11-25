@@ -1,5 +1,6 @@
 package Group5Project.WebApp.controller;
 
+import Group5Project.WebApp.Data.UserModelCollection;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,6 +47,7 @@ public class WebSecurityConfig  {
                         .loginPage("/Login")
                                 .loginProcessingUrl("/process-login")
                                 .defaultSuccessUrl("/")
+                                .failureUrl("/Login?error=true")
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -74,6 +76,8 @@ public class WebSecurityConfig  {
                 .roles("ADMIN")
                 .build();
 //encoder().encode("adminPass")
+
+
         return new InMemoryUserDetailsManager(user, admin);
     }
 

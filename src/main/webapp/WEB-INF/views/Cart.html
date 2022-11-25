@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="15">
   <link rel="stylesheet" href="styles.css">
   <title>Index</title>
 </head>
@@ -9,8 +10,12 @@
 
 <div class="topnav">
   <a href="/">Home</a>
-  <a href="PastAndPendingOrders">Past and Pending Orders</a>
-  <a class="active" href="Cart">Cart</a>
+  <a href="PastAndPendingOrders" class="notification">
+    <span>Orders</span>
+    <span class="badge" th:text="${NewlyCompletedOrders}"></span>
+  </a>
+  <a  class="active" href="Cart">Cart</a>
+
   <a class="logout" href="/Logout">Log Out</a>
 </div>
 

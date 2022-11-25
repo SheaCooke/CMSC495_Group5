@@ -126,7 +126,12 @@
 
     .center {
       text-align: center;
-      border: 1px solid green;
+      border: 1px solid black;
+    }
+
+    .centerErrors {
+      text-align: center;
+      color: red;
     }
 
   </style>
@@ -198,10 +203,11 @@
   </form>
 </div>
 
+<br>
 
-<div class="center" th:if="${not #lists.isEmpty(errors)}">
+<div class="centerErrors" th:if="${not #lists.isEmpty(errors)}">
 
-  <p>Registration failed for the following reasons:</p>
+  <p style="color: black">Registration failed for the following reasons:</p>
 
   <div th:each="message : ${errors}">
 
@@ -209,6 +215,11 @@
 
   </div>
 
+</div>
+
+<br>
+<div class="centerErrors" id="error" th:if="${(param.error != null) and (param.error[0] == 'true')}">
+  <p>Invalid username or password</p>
 </div>
 
 <script>

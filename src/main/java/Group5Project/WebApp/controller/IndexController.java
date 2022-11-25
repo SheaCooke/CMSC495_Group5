@@ -12,6 +12,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 
+import static Group5Project.WebApp.Data.CompletedOrders.newlyCompletedOrders;
 import static Group5Project.WebApp.Data.Menu.MenuItems;
 
 @Controller
@@ -23,6 +24,8 @@ public class IndexController {
         //for testing, replace with query to sql
 
         //MenuItems.clear();
+
+        model.put("NewlyCompletedOrders", newlyCompletedOrders);
 
         if (MenuItems.size() == 0)
         {
@@ -47,6 +50,7 @@ public class IndexController {
         }
 
         CurrentUser.currentUserName = username;
+        CurrentUser.currentView = "home";
 
         if(!CartExists(username))
         {

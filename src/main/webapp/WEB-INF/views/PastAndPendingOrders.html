@@ -11,8 +11,11 @@
 
 <div class="topnav">
     <a href="/">Home</a>
-    <a class="active" href="PastAndPendingOrders">Past and Pending Orders</a>
+    <a class="active" href="PastAndPendingOrders">
+        <span>Orders</span>
+    </a>
     <a href="Cart">Cart</a>
+
     <a class="logout" href="/Logout">Log Out</a>
 </div>
 
@@ -71,7 +74,7 @@
                                 document.getElementById('timer-'+index).innerHTML = "Completed";
 
                                 //Remove Order from PendingOrders and add to CompletedOrders
-                                window.location = '/CompletedOrder/'+[[${Order.ID}]]; //should be replaced with post request
+                               // window.location = '/CompletedOrder/'+[[${Order.ID}]]; //should be replaced with post request
 
                             }
                         }, 1000);
@@ -99,7 +102,7 @@
     <p style="text-align: center;">Past orders</p>
 
 <div th:if="${not #lists.isEmpty(CompletedOrdersList)}">
-<table>
+<table style="width: 750px; margin: auto;">
     <tbody th:each="Order : ${CompletedOrdersList}">
 
     <tr>

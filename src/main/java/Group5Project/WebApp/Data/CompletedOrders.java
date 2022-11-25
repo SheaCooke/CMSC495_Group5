@@ -9,4 +9,6 @@ import java.util.List;
 public class CompletedOrders {
 
     public static List<Order> CompletedOrdersList = new ArrayList<Order>();
+
+    public static int newlyCompletedOrders = 0;
 }
