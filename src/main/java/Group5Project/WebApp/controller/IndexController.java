@@ -50,7 +50,7 @@ public class IndexController {
         }
 
         CurrentUser.currentUserName = username;
-        CurrentUser.currentView = "home";
+        //CurrentUser.currentView = "home";
 
         if(!CartExists(username))
         {

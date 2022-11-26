@@ -29,7 +29,7 @@ public class CartController {
     @GetMapping("Cart")
     public String Cart (Map<String, Object> model) {
 
-        CurrentUser.currentView = "/Cart";
+        //CurrentUser.currentView = "/Cart";
 
         model.put("NewlyCompletedOrders", newlyCompletedOrders);
 

@@ -26,7 +26,7 @@ public class PastAndPendingOrdersController {
 
 
 
-        CurrentUser.currentView = "PastAndPendingOrders";
+        //CurrentUser.currentView = "PastAndPendingOrders";
 
         newlyCompletedOrders = 0;
 

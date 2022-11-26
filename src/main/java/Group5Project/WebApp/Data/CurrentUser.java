@@ -4,5 +4,5 @@ public class CurrentUser {
 
     public static String currentUserName = "";
 
-    public static String currentView = "/";
+    //public static String currentView = "/";
 }
