@@ -1,6 +1,5 @@
 package Group5Project.WebApp.controller;
 
-import Group5Project.WebApp.Data.CartCollection;
 import Group5Project.WebApp.Data.UserModelCollection;
 import Group5Project.WebApp.Data.UserDto;
 import Group5Project.WebApp.model.UserModel;
@@ -33,6 +32,9 @@ public class RegisterController {
 
     private List<String> errorMessages = new ArrayList<String>();
 
+    private List<String> successMessages = new ArrayList<String>();
+
+
     private UserDto _dto = new UserDto();
 
 //
@@ -46,6 +48,7 @@ public class RegisterController {
 
         model.addAttribute("dto", _dto);
         model.addAttribute("errors", errorMessages);
+        model.addAttribute("success", successMessages);
 
         return "Login";
     }
@@ -53,6 +56,7 @@ public class RegisterController {
     @RequestMapping(value="/Logout", method = RequestMethod.GET)
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 
+        successMessages.clear();
         errorMessages.clear();
         _dto = new UserDto();
 
@@ -72,6 +76,8 @@ public class RegisterController {
 
         errorMessages.clear();
 
+        successMessages.clear();
+
           //  grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
 
             //UserDetails user = new User("test", "test", grantedAuthorities);
@@ -83,7 +89,7 @@ public class RegisterController {
               //  inMemoryUserDetailsManager.createUser();
 
         //validate account information
-        InformationIsValid(dto.getPassword(), dto.getVerifyPassword(), dto.getUsername(), dto.getEmail(), dto.getStudentID());
+        validateInformation(dto.getPassword(), dto.getVerifyPassword(), dto.getUsername(), dto.getEmail(), dto.getStudentID());
 
         if (validRegistrationInformation)
         {
@@ -97,6 +103,8 @@ public class RegisterController {
             inMemoryUserDetailsManager.createUser(user.username(dto.getUsername()).password(dto.getPassword()).roles("USER").build());
 
             _dto = new UserDto();
+
+            successMessages.add("Successfully registered account");
 
         }
 //        else
@@ -112,7 +120,7 @@ public class RegisterController {
 
     }
 
-    private void InformationIsValid(String password, String verifyPassword, String username, String email, String studentID)
+    private void validateInformation(String password, String verifyPassword, String username, String email, String studentID)
     {
         if (!PasswordsMatch(password, verifyPassword))
         {
