@@ -19,6 +19,8 @@ import java.util.UUID;
 
 import static Group5Project.WebApp.Data.CompletedOrders.CompletedOrdersList;
 import static Group5Project.WebApp.Data.CompletedOrders.newlyCompletedOrders;
+import static Group5Project.WebApp.Data.CurrentUser.GetNotificationsByUserName;
+import static Group5Project.WebApp.Data.CurrentUser.IncrementNotificationCount;
 import static Group5Project.WebApp.Data.Menu.MenuItems;
 import static Group5Project.WebApp.Data.PendingOrders.CurrentPendingOrders;
 import static Group5Project.WebApp.controller.IndexController.GetCartByUserName;
@@ -31,7 +33,7 @@ public class CartController {
 
         //CurrentUser.currentView = "/Cart";
 
-        model.put("NewlyCompletedOrders", newlyCompletedOrders);
+        model.put("NewlyCompletedOrders", GetNotificationsByUserName(CurrentUser.currentUserName));
 
         Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
 
@@ -106,7 +108,7 @@ public class CartController {
 
             CompletedOrdersList.add(order);
 
-            newlyCompletedOrders++;
+            IncrementNotificationCount(CurrentUser.currentUserName);
         }
 
     }

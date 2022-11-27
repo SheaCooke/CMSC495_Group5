@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 
 import static Group5Project.WebApp.Data.CompletedOrders.newlyCompletedOrders;
+import static Group5Project.WebApp.Data.CurrentUser.*;
 import static Group5Project.WebApp.Data.Menu.MenuItems;
 
 @Controller
@@ -25,7 +26,7 @@ public class IndexController {
 
         //MenuItems.clear();
 
-        model.put("NewlyCompletedOrders", newlyCompletedOrders);
+
 
         if (MenuItems.size() == 0)
         {
@@ -50,6 +51,8 @@ public class IndexController {
         }
 
         CurrentUser.currentUserName = username;
+
+
         //CurrentUser.currentView = "home";
 
         if(!CartExists(username))
@@ -59,6 +62,14 @@ public class IndexController {
             CartCollection.AllCarts.add(cart);
         }
 
+        if (!UserInformationExists(username))
+        {
+            CurrentUserInformation currentUserInformation = new CurrentUserInformation(username, 0);
+
+            currentUserInformationList.add(currentUserInformation);
+        }
+
+        model.put("NewlyCompletedOrders", GetNotificationsByUserName(CurrentUser.currentUserName));
 
         model.put("un", username);
 

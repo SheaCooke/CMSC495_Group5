@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 
 import static Group5Project.WebApp.Data.CompletedOrders.CompletedOrdersList;
 import static Group5Project.WebApp.Data.CompletedOrders.newlyCompletedOrders;
+import static Group5Project.WebApp.Data.CurrentUser.GetNotificationsByUserName;
+import static Group5Project.WebApp.Data.CurrentUser.ResetNotificationCount;
 import static Group5Project.WebApp.Data.PendingOrders.CurrentPendingOrders;
 import static Group5Project.WebApp.WebAppApplication.connection;
 
@@ -34,9 +36,9 @@ public class PastAndPendingOrdersController {
 
         //CurrentUser.currentView = "PastAndPendingOrders";
 
-        newlyCompletedOrders = 0;
+        ResetNotificationCount(CurrentUser.currentUserName);
 
-        model.put("NewlyCompletedOrders", newlyCompletedOrders);
+        model.put("NewlyCompletedOrders", GetNotificationsByUserName(CurrentUser.currentUserName));
 
         model.put("CurrentPendingOrders", CurrentPendingOrders.stream().filter(p -> p.userName.equals(CurrentUser.currentUserName)).collect(Collectors.toList()));
         model.put("CompletedOrdersList", CompletedOrdersList.stream().filter(p -> p.userName.equals(CurrentUser.currentUserName)).collect(Collectors.toList()));
