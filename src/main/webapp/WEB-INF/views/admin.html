@@ -159,11 +159,15 @@
     <tr>
       <th>Name</th>
       <th>Price</th>
+      <th>Category</th>
+      <th>Description</th>
       <th> </th>
     </tr>
     <tr th:each="Item : ${MenuItems}">
       <td th:text="${Item.ItemName}"></td>
       <td th:text="${Item.Price}"></td>
+      <td th:text="${Item.Category}"></td>
+      <td th:text="${Item.Description}"></td>
       <td>
 
         <form role="form" method="post" th:object="${Item}" th:action="@{'/admin/DeleteItem/{ID}' (ID=${Item.ID})}">
@@ -227,6 +231,12 @@
 
 
       <input type="text" placeholder="New Price" name="ItemPrice" required>
+
+
+      <input type="text" placeholder="New Category" name="ItemDescription" required>
+
+
+      <input type="text" placeholder="New Description" name="ItemCategory" required>
 
 
       <button class="buttonClass" type="submit">Save</button>

@@ -20,7 +20,7 @@ public class Item {
 
     public Item(int id, String itemName, int quantity, double price, String description, String category)
     {
-        //this.ID = id;
+        this.ID = id;
         this.ItemName = itemName;
         this.Quantity = quantity;
         this.Price = price;

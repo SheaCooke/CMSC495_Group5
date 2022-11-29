@@ -74,29 +74,41 @@ public class AdminController {
     }
 
     @PostMapping("/admin/UpdateItem")
-    public String UpdateItem(Model model, ItemDto dto) {
+    public String UpdateItem(Model model, ItemDto dto) throws SQLException {
 
-        //TODO: change to modify database, then call method to reload in admin get controller
+        String sql = String.format("update Menu_Items set ItemName='%1$s', Category='%2$s', Description='%3$s', Price='%4$s' " +
+                        "where ItemName='%1$s'",
+                dto.getItemName(), dto.getItemCategory(), dto.getItemDescription(), dto.getItemPrice());
 
-        double price = tryParseDouble(dto.getItemPrice(), 0.0);
+        Statement statement = connection.createStatement();
 
-        String name = dto.getItemName();
+        statement.execute(sql);
 
-        for (var i : MenuItems)
-        {
-            if (i.ItemName.equals(name))
-            {
-                i.Price = price;
-            }
-        }
+//        double price = tryParseDouble(dto.getItemPrice(), 0.0);
+//
+//        String name = dto.getItemName();
+//
+//        for (var i : MenuItems)
+//        {
+//            if (i.ItemName.equals(name))
+//            {
+//                i.Price = price;
+//            }
+//        }
 
         return "redirect:/admin";
     }
 
     @PostMapping("/admin/DeleteItem/{ID}")
-    public String DeleteItem(@PathVariable final int ID) {
+    public String DeleteItem(@PathVariable final int ID) throws SQLException {
 
-        MenuItems.removeIf(i -> i.ID == ID);
+        String sql = String.format("delete from Menu_Items where ItemID=%1$s",ID);
+
+        Statement statement = connection.createStatement();
+
+        statement.execute(sql);
+
+        //MenuItems.removeIf(i -> i.ID == ID);
 
         return "redirect:/admin";
     }
