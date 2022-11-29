@@ -16,13 +16,14 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static Group5Project.WebApp.Data.Menu.MenuItems;
+import static Group5Project.WebApp.Data.Menu.PopulateMenuItemsFromDatabase;
 import static Group5Project.WebApp.WebAppApplication.connection;
 
 @Controller
 public class AdminController {
 
     @GetMapping("/admin")
-    public String admin (Model model) {
+    public String admin (Model model) throws SQLException{
 
 //        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //
@@ -35,6 +36,8 @@ public class AdminController {
 //        }
 //
 //        CurrentUser.currentUserName = username;
+
+        PopulateMenuItemsFromDatabase();
 
         model.addAttribute("un", CurrentUser.currentUserName);
 
@@ -52,9 +55,9 @@ public class AdminController {
 
         //String sql = "insert into Menu_Items values ('1234', 'testCategory', 'testDesc', '100')";
 
-        String sql = String.format("insert into Menu_Items (Category, Description, Price)" +
-                        "values ('%1$s', '%2$s', '%3$s')",
-                dto.getItemCategory(), dto.getItemDescription(), dto.getItemPrice());
+        String sql = String.format("insert into Menu_Items (ItemName, Category, Description, Price)" +
+                        "values ('%1$s', '%2$s', '%3$s', '%4$s')",
+                dto.getItemName(), dto.getItemCategory(), dto.getItemDescription(), dto.getItemPrice());
 
         Statement statement = connection.createStatement();
 
@@ -62,9 +65,9 @@ public class AdminController {
 
 
 
-        Item newItem = new Item(dto.getItemName(), 1, price);
-
-        MenuItems.add(newItem);
+//        Item newItem = new Item(dto.getItemName(), 1, price, dto.getItemDescription(), dto.getItemCategory());
+//
+//        MenuItems.add(newItem);
 
         return "redirect:/admin";
 
@@ -72,6 +75,8 @@ public class AdminController {
 
     @PostMapping("/admin/UpdateItem")
     public String UpdateItem(Model model, ItemDto dto) {
+
+        //TODO: change to modify database, then call method to reload in admin get controller
 
         double price = tryParseDouble(dto.getItemPrice(), 0.0);
 
@@ -89,9 +94,9 @@ public class AdminController {
     }
 
     @PostMapping("/admin/DeleteItem/{ID}")
-    public String DeleteItem(@PathVariable final UUID ID) {
+    public String DeleteItem(@PathVariable final int ID) {
 
-        MenuItems.removeIf(i -> i.ID.equals(ID));
+        MenuItems.removeIf(i -> i.ID == ID);
 
         return "redirect:/admin";
     }

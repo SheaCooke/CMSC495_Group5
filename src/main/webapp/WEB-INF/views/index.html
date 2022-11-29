@@ -37,13 +37,13 @@
         <tr>
             <th>Name</th>
             <th>Price</th>
-            <th>Quantity</th>
+            <th>Description</th>
             <th> </th>
         </tr>
         <tr th:each="Item : ${MenuItems}">
             <td th:text="${Item.ItemName}"></td>
             <td th:text="${Item.Price}"></td>
-            <td> 1 </td>
+            <td th:text="${Item.Description}"></td>
             <td>
                 <form role="form" method="post" th:object="${Item}" th:action="@{'/AddToCart/{ID}' (ID=${Item.ID})}">
                     <button type="submit">Add To Cart</button>

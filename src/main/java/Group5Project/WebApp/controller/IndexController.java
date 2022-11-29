@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -14,12 +15,13 @@ import java.util.stream.Collectors;
 
 import static Group5Project.WebApp.Data.CurrentUser.*;
 import static Group5Project.WebApp.Data.Menu.MenuItems;
+import static Group5Project.WebApp.Data.Menu.PopulateMenuItemsFromDatabase;
 
 @Controller
 public class IndexController {
 
     @GetMapping("/")
-    public String home (Map<String, Object> model) {
+    public String home (Map<String, Object> model) throws SQLException {
 
         //for testing, replace with query to sql
 
@@ -27,15 +29,17 @@ public class IndexController {
 
 
 
-        if (MenuItems.size() == 0)
-        {
-            Item item1 = new Item("item1", 1, 10);
+//        if (MenuItems.size() == 0)
+//        {
+//            Item item1 = new Item("item1", 1, 10);
+//
+//            Item item2 = new Item("item2", 1, 15);
+//
+//            MenuItems.add(item1);
+//            MenuItems.add(item2);
+//        }
 
-            Item item2 = new Item("item2", 1, 15);
-
-            MenuItems.add(item1);
-            MenuItems.add(item2);
-        }
+        PopulateMenuItemsFromDatabase();
 
         model.put("MenuItems", MenuItems);
 
@@ -85,11 +89,11 @@ public class IndexController {
     }
 
     @PostMapping("/AddToCart/{ID}")
-    public String AddToCart(@PathVariable final UUID ID) {
+    public String AddToCart(@PathVariable final int ID) {
 
-        Item itemToClone = MenuItems.stream().filter(i -> i.ID.equals(ID)).findFirst().get();
+        Item itemToClone = MenuItems.stream().filter(i -> i.ID == ID).findFirst().get();
 
-        Item itemToAdd = new Item(itemToClone.ItemName, 1, itemToClone.Price);
+        Item itemToAdd = new Item(itemToClone.ID, itemToClone.ItemName, 1, itemToClone.Price, itemToClone.Description, itemToClone.Category);
 
         Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
 
@@ -99,7 +103,7 @@ public class IndexController {
     }
 
     @PostMapping("/RemoveFromCart/{ID}")
-    public String DecramentItem(@PathVariable final UUID ID) {
+    public String DecramentItem(@PathVariable final int ID) {
 
         boolean removeItem = false;
 
@@ -107,7 +111,7 @@ public class IndexController {
 
         for (var i : cartToModoify.ItemsInCart)
         {
-            if (i.ID.equals(ID))
+            if (i.ID == ID)
             {
                 if (i.Quantity <= 1)
                 {
@@ -132,13 +136,13 @@ public class IndexController {
     }
 
     @PostMapping("/IncramentItem/{ID}")
-    public String IncramentItem(@PathVariable final UUID ID) {
+    public String IncramentItem(@PathVariable final int ID) {
 
         Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
 
         for (var i : cartToModoify.ItemsInCart)
         {
-            if (i.ID.equals(ID))
+            if (i.ID == ID)
             {
                 i.Quantity++;
             }
@@ -160,11 +164,11 @@ public class IndexController {
         return hasUserRole;
     }
 
-    public static void RemoveItem(UUID ID)
+    public static void RemoveItem(int ID)
     {
         Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
 
-        cartToModoify.ItemsInCart.removeIf(j -> j.ID.equals(ID));
+        cartToModoify.ItemsInCart.removeIf(j -> j.ID == ID);
     }
 
     public static Cart GetCartByUserName(String username)

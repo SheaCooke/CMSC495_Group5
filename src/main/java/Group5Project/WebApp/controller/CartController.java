@@ -20,7 +20,6 @@ import java.util.UUID;
 import static Group5Project.WebApp.Data.CompletedOrders.CompletedOrdersList;
 import static Group5Project.WebApp.Data.CurrentUser.GetNotificationsByUserName;
 import static Group5Project.WebApp.Data.CurrentUser.IncrementNotificationCount;
-import static Group5Project.WebApp.Data.Menu.MenuItems;
 import static Group5Project.WebApp.Data.PendingOrders.CurrentPendingOrders;
 import static Group5Project.WebApp.controller.IndexController.GetCartByUserName;
 
