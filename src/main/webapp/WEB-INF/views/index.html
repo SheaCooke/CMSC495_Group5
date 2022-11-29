@@ -32,6 +32,9 @@
 
 </div>
 
+<br>
+<h3 style="text-align: center;">Appetizers</h3>
+
 <div th:if="${not #lists.isEmpty(MenuItems)}">
     <table id="displayTable">
         <tr>
@@ -40,7 +43,7 @@
             <th>Description</th>
             <th> </th>
         </tr>
-        <tr th:each="Item : ${MenuItems}">
+        <tr th:each="Item : ${MenuItems}" th:if="${Item.Category} == 'appetizer'">
             <td th:text="${Item.ItemName}"></td>
             <td th:text="${Item.Price}"></td>
             <td th:text="${Item.Description}"></td>
@@ -53,6 +56,57 @@
     </table>
 </div>
 
+
+<br>
+<br>
+<h3 style="text-align: center;">Entrees</h3>
+
+<div th:if="${not #lists.isEmpty(MenuItems)}">
+    <table id="displayTable">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th> </th>
+        </tr>
+        <tr th:each="Item : ${MenuItems}" th:if="${Item.Category} == 'entree'">
+            <td th:text="${Item.ItemName}"></td>
+            <td th:text="${Item.Price}"></td>
+            <td th:text="${Item.Description}"></td>
+            <td>
+                <form role="form" method="post" th:object="${Item}" th:action="@{'/AddToCart/{ID}' (ID=${Item.ID})}">
+                    <button type="submit">Add To Cart</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<br>
+<br>
+<h3 style="text-align: center;">Desserts</h3>
+
+<div th:if="${not #lists.isEmpty(MenuItems)}">
+    <table id="displayTable">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th> </th>
+        </tr>
+        <tr th:each="Item : ${MenuItems}" th:if="${Item.Category} == 'dessert'">
+            <td th:text="${Item.ItemName}"></td>
+            <td th:text="${Item.Price}"></td>
+            <td th:text="${Item.Description}"></td>
+            <td>
+                <form role="form" method="post" th:object="${Item}" th:action="@{'/AddToCart/{ID}' (ID=${Item.ID})}">
+                    <button type="submit">Add To Cart</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
 
 
 </body>
