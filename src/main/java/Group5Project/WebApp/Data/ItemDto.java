@@ -17,5 +17,11 @@ public class ItemDto {
     @Getter
     @Setter
     private String ItemPrice = "";
+    @Getter
+    @Setter
+    private String ItemCategory = "";
+    @Getter
+    @Setter
+    private String ItemDescription = "";
 
 }

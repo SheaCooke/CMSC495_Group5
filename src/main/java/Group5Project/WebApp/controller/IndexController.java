@@ -12,7 +12,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 
-import static Group5Project.WebApp.Data.CompletedOrders.newlyCompletedOrders;
 import static Group5Project.WebApp.Data.CurrentUser.*;
 import static Group5Project.WebApp.Data.Menu.MenuItems;
 

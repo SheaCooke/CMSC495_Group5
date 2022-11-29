@@ -9,11 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static Group5Project.WebApp.Data.Menu.MenuItems;
+import static Group5Project.WebApp.WebAppApplication.connection;
 
 @Controller
 public class AdminController {
@@ -43,9 +46,21 @@ public class AdminController {
     }
 
     @PostMapping("/admin/AddNewItem")
-    public String AddNewItem(Model model, ItemDto dto) {
+    public String AddNewItem(Model model, ItemDto dto) throws SQLException {
 
         double price = tryParseDouble(dto.getItemPrice(), 0.0);
+
+        //String sql = "insert into Menu_Items values ('1234', 'testCategory', 'testDesc', '100')";
+
+        String sql = String.format("insert into Menu_Items (Category, Description, Price)" +
+                        "values ('%1$s', '%2$s', '%3$s')",
+                dto.getItemCategory(), dto.getItemDescription(), dto.getItemPrice());
+
+        Statement statement = connection.createStatement();
+
+        statement.execute(sql);
+
+
 
         Item newItem = new Item(dto.getItemName(), 1, price);
 

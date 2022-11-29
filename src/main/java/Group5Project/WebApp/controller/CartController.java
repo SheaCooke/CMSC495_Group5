@@ -18,7 +18,6 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 import static Group5Project.WebApp.Data.CompletedOrders.CompletedOrdersList;
-import static Group5Project.WebApp.Data.CompletedOrders.newlyCompletedOrders;
 import static Group5Project.WebApp.Data.CurrentUser.GetNotificationsByUserName;
 import static Group5Project.WebApp.Data.CurrentUser.IncrementNotificationCount;
 import static Group5Project.WebApp.Data.Menu.MenuItems;

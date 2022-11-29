@@ -14,10 +14,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-
 import static Group5Project.WebApp.Data.CompletedOrders.CompletedOrdersList;
-import static Group5Project.WebApp.Data.CompletedOrders.newlyCompletedOrders;
 import static Group5Project.WebApp.Data.CurrentUser.GetNotificationsByUserName;
 import static Group5Project.WebApp.Data.CurrentUser.ResetNotificationCount;
 import static Group5Project.WebApp.Data.PendingOrders.CurrentPendingOrders;
@@ -32,7 +29,6 @@ public class PastAndPendingOrdersController {
 //        String sql = "insert into contacts values ('fName', 'lName')";
 //		Statement statement = connection.createStatement();
 //		statement.execute(sql);
-
 
         //CurrentUser.currentView = "PastAndPendingOrders";
 

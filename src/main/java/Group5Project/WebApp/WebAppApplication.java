@@ -18,7 +18,7 @@ public class WebAppApplication extends SpringBootServletInitializer {
 
 		SpringApplication.run(WebAppApplication.class, args);
 
-		String jdbcUrl = "jdbc:sqlite:testDB.db";
+		String jdbcUrl = "jdbc:sqlite:EasyServ_Database.db";
 		connection = DriverManager.getConnection(jdbcUrl);
 
 //		String sql = "create table contacts (firstname varchar(20), lastname varchar(20))";
