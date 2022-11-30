@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,6 +38,12 @@ public class AdminController {
 //        }
 //
 //        CurrentUser.currentUserName = username;
+
+        String[] categoryOptions = {"entree","appetizer","dessert"};
+
+        model.addAttribute("categoryOptions", categoryOptions);
+
+
 
         PopulateMenuItemsFromDatabase();
 
