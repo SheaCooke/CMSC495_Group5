@@ -2,6 +2,7 @@ package Group5Project.WebApp.controller;
 
 import Group5Project.WebApp.Data.UserModelCollection;
 import Group5Project.WebApp.Data.UserDto;
+import Group5Project.WebApp.model.Item;
 import Group5Project.WebApp.model.UserModel;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,16 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static Group5Project.WebApp.WebAppApplication.connection;
 
 @NoArgsConstructor
 @Controller
@@ -44,7 +51,10 @@ public class RegisterController {
 //    }
 
     @GetMapping("/Login")
-    public String login (Model model) {
+    public String login (Model model) throws SQLException {
+
+        //load users from database into memory
+        LoadUsersFromDatabase();
 
         model.addAttribute("dto", _dto);
         model.addAttribute("errors", errorMessages);
@@ -68,7 +78,7 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String Register(Model model, UserDto dto) {
+    public String Register(Model model, UserDto dto) throws SQLException {
 
         _dto = dto;
 
@@ -94,17 +104,25 @@ public class RegisterController {
         if (validRegistrationInformation)
         {
             //create new user object
-            UserModel newUser = new UserModel(dto.getEmail(), dto.getUsername(), dto.getPassword(), dto.getStudentID());
-
-            UserModelCollection.Users.add(newUser);
-
-            User.UserBuilder user = User.withDefaultPasswordEncoder();
-
-            inMemoryUserDetailsManager.createUser(user.username(dto.getUsername()).password(dto.getPassword()).roles("USER").build());
+//            UserModel newUser = new UserModel(dto.getEmail(), dto.getUsername(), dto.getPassword(), dto.getStudentID());
+//
+//            UserModelCollection.Users.add(newUser);
+//
+//            User.UserBuilder user = User.withDefaultPasswordEncoder();
+//
+//            inMemoryUserDetailsManager.createUser(user.username(dto.getUsername()).password(dto.getPassword()).roles("USER").build());
 
             _dto = new UserDto();
 
             successMessages.add("Successfully registered account");
+
+            String sql = String.format("insert into Customer_Accounts " +
+                            "values ('%1$s', '%2$s', '%3$s', '%4$s')",
+                    dto.getStudentID(), dto.getEmail(), dto.getUsername(), dto.getPassword());
+
+            Statement statement = connection.createStatement();
+
+            statement.execute(sql);
 
         }
 //        else
@@ -228,6 +246,41 @@ public class RegisterController {
         dto.setVerifyPassword(dto.getVerifyPassword().trim());
         dto.setStudentID(dto.getStudentID().trim());
         dto.setUsername(dto.getUsername().trim());
+    }
+
+    private void LoadUsersFromDatabase() throws SQLException {
+
+        String sql = "select * from Customer_Accounts";
+
+        PreparedStatement ps = connection.prepareStatement(sql);
+
+        ResultSet rs = ps.executeQuery();
+
+
+
+        while (rs.next())
+        {
+            String Username = rs.getString("Username");
+
+            if (inMemoryUserDetailsManager.userExists(Username))
+            {
+                continue;
+            }
+
+            String ID = rs.getString("C_AID");
+            String Email = rs.getString("Email");
+
+            String Password = rs.getString("Password");
+
+            UserModel newUser = new UserModel(Email, Username, Password, ID);
+
+            UserModelCollection.Users.add(newUser);
+
+            User.UserBuilder user = User.withDefaultPasswordEncoder();
+
+            inMemoryUserDetailsManager.createUser(user.username(Username).password(Password).roles("USER").build());
+
+        }
     }
 
 }
