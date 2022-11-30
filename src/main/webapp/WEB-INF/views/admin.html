@@ -195,7 +195,13 @@
 
       <input type="text" placeholder="Enter Name" name="ItemName" required>
 
-      <input type="text" placeholder="Enter Category" name="ItemCategory" required>
+<!--      <input type="text" placeholder="Enter Category" name="ItemCategory" required>-->
+      <label for="selectCategory">Category:</label>
+      <select id="selectCategory" style="height:40px; width:200px;" required name="ItemCategory">
+        <option value="appetizer">appetizer</option>
+        <option value="entree">entree</option>
+        <option value="dessert">dessert</option>
+      </select>
 
 
       <input type="text" placeholder="Enter Description" name="ItemDescription" required>
@@ -233,8 +239,12 @@
       <input type="text" placeholder="New Price" name="ItemPrice" required>
 
 
-      <input type="text" placeholder="New Category" name="ItemCategory" required>
-<!--      <select class="form-control" th:field="${categoryOptions}"  name="ItemCategory">-->
+      <label for="selectCategory2">Category:</label>
+      <select id="selectCategory2" style="height:40px; width:200px;" required name="ItemCategory">
+        <option value="appetizer">appetizer</option>
+        <option value="entree">entree</option>
+        <option value="dessert">dessert</option>
+      </select>
 
 
       <input type="text" placeholder="New Description" name="ItemDescription" required>
