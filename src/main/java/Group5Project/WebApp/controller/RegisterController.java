@@ -251,8 +251,6 @@ public class RegisterController {
 
         ResultSet rs = ps.executeQuery();
 
-
-
         while (rs.next())
         {
             String Username = rs.getString("Username");

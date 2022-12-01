@@ -4,7 +4,9 @@ import java.util.*;
 
 public class Order {
 
-    public UUID ID = java.util.UUID.randomUUID();
+    //public UUID ID = java.util.UUID.randomUUID();
+
+    public int ID;
     public List<Item> ItemsInOrder = new ArrayList<>();
 
     public double TotalPrice;
@@ -13,11 +15,22 @@ public class Order {
 
     public Date EstimatedCompletionDate;
 
+    public String CompletedDate = "";
+
     public Order(List<Item> items, String userName)
     {
         this.ItemsInOrder = new ArrayList<Item>(items);
         this.TotalPrice = CalculateTotalPrice();
         this.EstimatedCompletionDate = CalculateEstimatedDate();
+        this.userName = userName;
+    }
+
+    public Order(int id, List<Item> items, double totalPrice, String userName, String completedDate)
+    {
+        this.ID = id;
+        this.ItemsInOrder = items;
+        this.TotalPrice = totalPrice;
+        this.CompletedDate = completedDate;
         this.userName = userName;
     }
 

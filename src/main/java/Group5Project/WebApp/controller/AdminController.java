@@ -44,8 +44,6 @@ public class AdminController {
 
         double price = tryParseDouble(dto.getItemPrice(), 0.0);
 
-        //String sql = "insert into Menu_Items values ('1234', 'testCategory', 'testDesc', '100')";
-
         String sql = String.format("insert into Menu_Items (ItemName, Category, Description, Price)" +
                         "values ('%1$s', '%2$s', '%3$s', '%4$s')",
                 dto.getItemName(), dto.getItemCategory(), dto.getItemDescription(), dto.getItemPrice());

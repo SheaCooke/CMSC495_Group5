@@ -19,10 +19,7 @@
     <a class="logout" href="/Logout">Log Out</a>
 </div>
 
-
-    <h2 style="text-align: center;">Past and Pending Orders</h2>
-
-    <p style="text-align: center;">pending orders</p>
+    <h3 style="text-align: center;">pending orders</h3>
     <div th:if="${not #lists.isEmpty(CurrentPendingOrders)}">
 
         <table id="displayTable">
@@ -99,8 +96,7 @@
 
     </div>
 
-    <p style="text-align: center;">Past orders</p>
-
+    <h3 style="text-align: center;">Previous orders</h3>
 <div th:if="${not #lists.isEmpty(CompletedOrdersList)}">
 <table style="width: 750px; margin: auto;">
     <tbody th:each="Order : ${CompletedOrdersList}">
@@ -124,7 +120,7 @@
     </tr>
     <tr>
         <td th:text="${Order.TotalPrice}"></td>
-        <td th:text="${Order.EstimatedCompletionDate}"></td>
+        <td th:text="${Order.CompletedDate}"></td>
         <td th:text="${Order.ID}"></td>
     </tr>
     <br>

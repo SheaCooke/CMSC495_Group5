@@ -77,17 +77,17 @@ public class CartController {
 
     class TimerHelper extends TimerTask
     {
-        public UUID ID;
+        public int ID;
         @SneakyThrows
         @Override
         public void run()
         {
-            Order order = CurrentPendingOrders.stream().filter(i -> i.ID.equals(ID)).findFirst().get();
+            Order order = CurrentPendingOrders.stream().filter(i -> i.ID == ID).findFirst().get();
 
             createCompletedOrderInDB(order);
 
             //remove from Pending orders
-            CurrentPendingOrders.removeIf(x -> x.ID.equals(ID));
+            CurrentPendingOrders.removeIf(x -> x.ID == ID);
 
             //add to completed orders
 
@@ -97,8 +97,6 @@ public class CartController {
         }
 
         private void createCompletedOrderInDB(Order order) throws SQLException {
-
-
 
             String orderPriceString = String.valueOf(order.TotalPrice);
 
@@ -115,13 +113,6 @@ public class CartController {
 
         private String getDayMonthYear()
         {
-//            Date date = new Date();
-//            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//            int year  = localDate.getYear();
-//            int month = localDate.getMonthValue();
-//            int day   = localDate.getDayOfMonth();
-//
-//            String res = String.format("'%1$s' '%2$s' '%3$s'", day,month,year);
 
             Date date = new Date();
 
@@ -136,9 +127,6 @@ public class CartController {
 
             String res = day+ "-" + month + "-" + year;
 
-
-            System.out.println(res);
-
             return res;
         }
 
@@ -148,8 +136,6 @@ public class CartController {
 
             String res = user.getStudentID();
 
-            System.out.println(res);
-
             return res;
         }
 
@@ -158,8 +144,6 @@ public class CartController {
             Gson gson = new Gson();
 
             String formattedList = gson.toJson(items);
-
-            System.out.println(formattedList);
 
             return formattedList;
         }
