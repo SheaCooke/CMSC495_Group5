@@ -27,23 +27,6 @@ public class AdminController {
     @GetMapping("/admin")
     public String admin (Model model) throws SQLException{
 
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-//        String username = "";
-//
-//        if (principal instanceof UserDetails) {
-//            username = ((UserDetails)principal).getUsername();
-//        } else {
-//            username = principal.toString();
-//        }
-//
-//        CurrentUser.currentUserName = username;
-
-        String[] categoryOptions = {"entree","appetizer","dessert"};
-
-        model.addAttribute("categoryOptions", categoryOptions);
-
-
 
         PopulateMenuItemsFromDatabase();
 
@@ -71,14 +54,7 @@ public class AdminController {
 
         statement.execute(sql);
 
-
-
-//        Item newItem = new Item(dto.getItemName(), 1, price, dto.getItemDescription(), dto.getItemCategory());
-//
-//        MenuItems.add(newItem);
-
         return "redirect:/admin";
-
     }
 
     @PostMapping("/admin/UpdateItem")
@@ -92,18 +68,6 @@ public class AdminController {
 
         statement.execute(sql);
 
-//        double price = tryParseDouble(dto.getItemPrice(), 0.0);
-//
-//        String name = dto.getItemName();
-//
-//        for (var i : MenuItems)
-//        {
-//            if (i.ItemName.equals(name))
-//            {
-//                i.Price = price;
-//            }
-//        }
-
         return "redirect:/admin";
     }
 
@@ -115,8 +79,6 @@ public class AdminController {
         Statement statement = connection.createStatement();
 
         statement.execute(sql);
-
-        //MenuItems.removeIf(i -> i.ID == ID);
 
         return "redirect:/admin";
     }

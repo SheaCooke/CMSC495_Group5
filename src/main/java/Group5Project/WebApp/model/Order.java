@@ -13,7 +13,6 @@ public class Order {
 
     public Date EstimatedCompletionDate;
 
-
     public Order(List<Item> items, String userName)
     {
         this.ItemsInOrder = new ArrayList<Item>(items);

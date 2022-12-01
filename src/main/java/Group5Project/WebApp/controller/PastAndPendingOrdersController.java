@@ -24,13 +24,7 @@ import static Group5Project.WebApp.WebAppApplication.connection;
 public class PastAndPendingOrdersController {
 
     @GetMapping("PastAndPendingOrders")
-    public String PastAndPendingOrders (Map<String, Object> model) throws SQLException {
-
-//        String sql = "insert into contacts values ('fName', 'lName')";
-//		Statement statement = connection.createStatement();
-//		statement.execute(sql);
-
-        //CurrentUser.currentView = "PastAndPendingOrders";
+    public String PastAndPendingOrders (Map<String, Object> model) {
 
         ResetNotificationCount(CurrentUser.currentUserName);
 
@@ -41,28 +35,5 @@ public class PastAndPendingOrdersController {
 
         return "PastAndPendingOrders";
     }
-
-//    @GetMapping("/CompletedOrder/{ID}")
-//    public String CompletedOrder(@PathVariable UUID ID) {
-//
-//        //get Order object
-//        Order order = CurrentPendingOrders.stream().filter(i -> i.ID.equals(ID)).findFirst().get();
-//
-//        //remove from Pending orders
-//        CurrentPendingOrders.removeIf(x -> x.ID.equals(ID));
-//
-//        //add to completed orders
-//
-//        CompletedOrdersList.add(order);
-//
-//        newlyCompletedOrders++;
-//
-//        String url = "redirect:/" + CurrentUser.currentView;
-//
-//        return url;
-//    }
-
-
-
 
 }

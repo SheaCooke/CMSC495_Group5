@@ -2,6 +2,7 @@ package Group5Project.WebApp.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class CurrentUser {
 
@@ -16,8 +17,16 @@ public class CurrentUser {
 
     public static int GetNotificationsByUserName(String userName)
     {
-        return currentUserInformationList.stream().filter(i -> i.userName.equals(userName))
-                .findFirst().get().numberOfNotifications;
+        try
+        {
+            return currentUserInformationList.stream().filter(i -> i.userName.equals(userName))
+                    .findFirst().get().numberOfNotifications;
+        }
+        catch (NoSuchElementException exception)
+        {
+            return 0;
+        }
+
     }
 
     public static void IncrementNotificationCount(String username)
@@ -28,8 +37,14 @@ public class CurrentUser {
 
     public static void ResetNotificationCount(String username)
     {
-        currentUserInformationList.stream().filter(i -> i.userName.equals(username))
-                .findFirst().get().numberOfNotifications = 0;
+        try
+        {
+            currentUserInformationList.stream().filter(i -> i.userName.equals(username))
+                    .findFirst().get().numberOfNotifications = 0;
+        }
+        catch (NoSuchElementException exception)
+        {}
+
     }
 
     //get list of usernames from db

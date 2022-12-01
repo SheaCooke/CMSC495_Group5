@@ -125,11 +125,6 @@ public class RegisterController {
             statement.execute(sql);
 
         }
-//        else
-//        {
-//            model.addAttribute("dto", dto);
-//        }
-
 
         validRegistrationInformation = true;
 
