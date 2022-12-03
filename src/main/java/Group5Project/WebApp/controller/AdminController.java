@@ -24,11 +24,14 @@ import static Group5Project.WebApp.WebAppApplication.connection;
 @Controller
 public class AdminController {
 
+    private List<String> errorMessages = new ArrayList<String>();
+
     @GetMapping("/admin")
     public String admin (Model model) throws SQLException{
 
-
         PopulateMenuItemsFromDatabase();
+
+        model.addAttribute("errors", errorMessages);
 
         model.addAttribute("un", CurrentUser.currentUserName);
 
@@ -41,6 +44,16 @@ public class AdminController {
 
     @PostMapping("/admin/AddNewItem")
     public String AddNewItem(Model model, ItemDto dto) throws SQLException {
+
+        errorMessages.clear();
+
+        //check if item name already exists
+        if (MenuItems.stream().anyMatch(i -> i.ItemName.equals(dto.getItemName())))
+        {
+            errorMessages.add("Item name already exists");
+
+            return "redirect:/admin";
+        }
 
         double price = tryParseDouble(dto.getItemPrice(), 0.0);
 
@@ -58,6 +71,15 @@ public class AdminController {
     @PostMapping("/admin/UpdateItem")
     public String UpdateItem(Model model, ItemDto dto) throws SQLException {
 
+        errorMessages.clear();
+
+        if (!MenuItems.stream().anyMatch(i -> i.ItemName.equals(dto.getItemName())))
+        {
+            errorMessages.add("Item with name " + dto.getItemName() + " could not be found");
+
+            return "redirect:/admin";
+        }
+
         String sql = String.format("update Menu_Items set ItemName='%1$s', Category='%2$s', Description='%3$s', Price='%4$s' " +
                         "where ItemName='%1$s'",
                 dto.getItemName(), dto.getItemCategory(), dto.getItemDescription(), dto.getItemPrice());
@@ -71,6 +93,8 @@ public class AdminController {
 
     @PostMapping("/admin/DeleteItem/{ID}")
     public String DeleteItem(@PathVariable final int ID) throws SQLException {
+
+        errorMessages.clear();
 
         String sql = String.format("delete from Menu_Items where ItemID=%1$s",ID);
 
