@@ -1,10 +1,6 @@
 package Group5Project.WebApp.controller;
 
 import Group5Project.WebApp.Data.*;
-import Group5Project.WebApp.model.Item;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static Group5Project.WebApp.Data.Menu.MenuItems;
 import static Group5Project.WebApp.Data.Menu.PopulateMenuItemsFromDatabase;
@@ -26,6 +19,8 @@ public class AdminController {
 
     private List<String> errorMessages = new ArrayList<String>();
 
+    private HelperMethods helperMethods = new HelperMethods();
+
     @GetMapping("/admin")
     public String admin (Model model) throws SQLException{
 
@@ -33,7 +28,7 @@ public class AdminController {
 
         model.addAttribute("errors", errorMessages);
 
-        model.addAttribute("un", CurrentUser.currentUserName);
+        model.addAttribute("un", UserManager.currentUserName);
 
         model.addAttribute("MenuItems", MenuItems);
 
@@ -55,7 +50,7 @@ public class AdminController {
             return "redirect:/admin";
         }
 
-        double price = tryParseDouble(dto.getItemPrice(), 0.0);
+        double price = helperMethods.tryParseDouble(dto.getItemPrice(), 0.0);
 
         String sql = String.format("insert into Menu_Items (ItemName, Category, Description, Price)" +
                         "values ('%1$s', '%2$s', '%3$s', '%4$s')",
@@ -105,12 +100,12 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    public double tryParseDouble(String value, double defaultVal) {
-        try {
-            return Double.parseDouble(value);
-        } catch (NumberFormatException e) {
-            return defaultVal;
-        }
-    }
+//    public double tryParseDouble(String value, double defaultVal) {
+//        try {
+//            return Double.parseDouble(value);
+//        } catch (NumberFormatException e) {
+//            return defaultVal;
+//        }
+//    }
 
 }

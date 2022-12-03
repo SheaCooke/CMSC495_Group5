@@ -11,11 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 
-import static Group5Project.WebApp.Data.CurrentUser.*;
+import static Group5Project.WebApp.Data.UserManager.*;
 import static Group5Project.WebApp.Data.Menu.MenuItems;
 import static Group5Project.WebApp.Data.Menu.PopulateMenuItemsFromDatabase;
 
@@ -23,6 +21,8 @@ import static Group5Project.WebApp.Data.Menu.PopulateMenuItemsFromDatabase;
 public class IndexController {
 
     private List<String> errorMessages = new ArrayList<String>();
+
+    private HelperMethods helperMethods = new HelperMethods();
 
 
     @GetMapping("/")
@@ -44,9 +44,9 @@ public class IndexController {
             username = principal.toString();
         }
 
-        CurrentUser.currentUserName = username;
+        UserManager.currentUserName = username;
 
-        if(!CartExists(username))
+        if(!helperMethods.CartExists(username))
         {
             Cart cart = new Cart(username);
 
@@ -60,13 +60,13 @@ public class IndexController {
             currentUserInformationList.add(currentUserInformation);
         }
 
-        model.put("NewlyCompletedOrders", GetNotificationsByUserName(CurrentUser.currentUserName));
+        model.put("NewlyCompletedOrders", GetNotificationsByUserName(UserManager.currentUserName));
 
         model.put("un", username);
 
         model.put("role", "USER");
 
-        if (hasRole("ROLE_ADMIN"))
+        if (helperMethods.hasRole("ROLE_ADMIN"))
         {
             model.put("role", "ADMIN");
 
@@ -79,10 +79,10 @@ public class IndexController {
     @PostMapping("/AddToCart/{ID}")
     public String AddToCart(@PathVariable final int ID) {
 
-        Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
+        Cart cartToModoify = helperMethods.GetCartByUserName(UserManager.currentUserName);
 
         //check for max cart quantity
-        if (GetCartQuantity(cartToModoify) >= 20)
+        if (helperMethods.GetCartQuantity(cartToModoify) >= 20)
         {
             if (errorMessages.size() == 0)
             {
@@ -109,7 +109,7 @@ public class IndexController {
 
         boolean removeItem = false;
 
-        Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
+        Cart cartToModoify = helperMethods.GetCartByUserName(UserManager.currentUserName);
 
         for (var i : cartToModoify.ItemsInCart)
         {
@@ -131,7 +131,7 @@ public class IndexController {
 
         if (removeItem)
         {
-            RemoveItem(ID);
+            helperMethods.RemoveItem(ID);
         }
 
         errorMessages.clear();
@@ -142,10 +142,10 @@ public class IndexController {
     @PostMapping("/IncramentItem/{ID}")
     public String IncramentItem(@PathVariable final int ID) {
 
-        Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
+        Cart cartToModoify = helperMethods.GetCartByUserName(UserManager.currentUserName);
 
         //check for max cart quantity
-        if (GetCartQuantity(cartToModoify) >= 20)
+        if (helperMethods.GetCartQuantity(cartToModoify) >= 20)
         {
             if (errorMessages.size() == 0)
             {
@@ -170,51 +170,50 @@ public class IndexController {
         return "redirect:/Cart";
     }
 
-    public static boolean hasRole (String roleName)
-    {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    public static boolean hasRole (String roleName)
+//    {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        boolean hasUserRole = authentication.getAuthorities().stream()
+//                .anyMatch(r -> r.getAuthority().equals(roleName));
+//
+//        return hasUserRole;
+//    }
 
-        boolean hasUserRole = authentication.getAuthorities().stream()
-                .anyMatch(r -> r.getAuthority().equals(roleName));
+//    public static void RemoveItem(int ID)
+//    {
+//        Cart cartToModoify = GetCartByUserName(UserManager.currentUserName);
+//
+//        cartToModoify.ItemsInCart.removeIf(j -> j.ID == ID);
+//    }
 
-        return hasUserRole;
-    }
-
-    public static void RemoveItem(int ID)
-    {
-        Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
-
-        cartToModoify.ItemsInCart.removeIf(j -> j.ID == ID);
-    }
-
-    public static Cart GetCartByUserName(String username)
-    {
-        if (CartExists(username))
-        {
-            return CartCollection.AllCarts.stream().filter(i -> i.UserName.equals(username)).findFirst().get();
-        }
-        else
-        {
-            return new Cart(CurrentUser.currentUserName);
-        }
-
-    }
-
-    public static boolean CartExists(String username)
-    {
-        return CartCollection.AllCarts.stream().filter(i -> i.UserName.equals(username)).findFirst().isPresent();
-    }
-
-    public static int GetCartQuantity(Cart cart)
-    {
-        int quantity = 0;
-
-        for (Item item : cart.ItemsInCart)
-        {
-            quantity += item.Quantity;
-        }
-        return quantity;
-    }
+//    public static Cart GetCartByUserName(String username)
+//    {
+//        if (CartExists(username))
+//        {
+//            return CartCollection.AllCarts.stream().filter(i -> i.UserName.equals(username)).findFirst().get();
+//        }
+//        else
+//        {
+//            return new Cart(UserManager.currentUserName);
+//        }
+//
+//    }
+//    public static boolean CartExists(String username)
+//    {
+//        return CartCollection.AllCarts.stream().filter(i -> i.UserName.equals(username)).findFirst().isPresent();
+//    }
+//
+//    public static int GetCartQuantity(Cart cart)
+//    {
+//        int quantity = 0;
+//
+//        for (Item item : cart.ItemsInCart)
+//        {
+//            quantity += item.Quantity;
+//        }
+//        return quantity;
+//    }
 
 
 

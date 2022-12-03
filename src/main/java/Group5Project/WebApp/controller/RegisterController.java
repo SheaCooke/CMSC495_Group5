@@ -1,8 +1,6 @@
 package Group5Project.WebApp.controller;
 
-import Group5Project.WebApp.Data.UserModelCollection;
 import Group5Project.WebApp.Data.UserDto;
-import Group5Project.WebApp.model.Item;
 import Group5Project.WebApp.model.UserModel;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static Group5Project.WebApp.Data.CurrentUser.Users;
+import static Group5Project.WebApp.Data.UserManager.Users;
 import static Group5Project.WebApp.WebAppApplication.connection;
 
 @NoArgsConstructor
@@ -37,6 +35,8 @@ public class RegisterController {
 
     @Autowired
     private InMemoryUserDetailsManager inMemoryUserDetailsManager;
+
+    private HelperMethods helperMethods = new HelperMethods();
 
     private boolean validRegistrationInformation = true;
 
@@ -202,16 +202,16 @@ public class RegisterController {
 
     private boolean ValidStudentID(String studentID)
     {
-        return studentID.length() == 7 && tryParseInt(studentID) != -1;
+        return studentID.length() == 7 && helperMethods.tryParseInt(studentID) != -1;
     }
 
-    public int tryParseInt(String value) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            return -1;
-        }
-    }
+//    public int tryParseInt(String value) {
+//        try {
+//            return Integer.parseInt(value);
+//        } catch (NumberFormatException e) {
+//            return -1;
+//        }
+//    }
 
     private void trimDTOFields(UserDto dto)
     {

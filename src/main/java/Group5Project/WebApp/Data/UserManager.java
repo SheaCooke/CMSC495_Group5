@@ -1,16 +1,12 @@
 package Group5Project.WebApp.Data;
 
 import Group5Project.WebApp.model.UserModel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class CurrentUser {
-
-
+public class UserManager {
 
     public static List<UserModel> Users = new ArrayList<UserModel>();
 

@@ -65,18 +65,12 @@ public class WebSecurityConfig  {
 
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-        UserDetails user =
-                User.withUsername("user")
-                        .password(encoder.encode("password"))
-                        .roles("USER")
-                        .build();
-
         UserDetails admin = User.withUsername("admin")
                 .password(encoder.encode("admin"))
                 .roles("ADMIN")
                 .build();
 
-        return new InMemoryUserDetailsManager(user, admin);
+        return new InMemoryUserDetailsManager(admin);
     }
 
 }
