@@ -23,22 +23,6 @@ public class IndexController {
     @GetMapping("/")
     public String home (Map<String, Object> model) throws SQLException {
 
-        //for testing, replace with query to sql
-
-        //MenuItems.clear();
-
-
-
-//        if (MenuItems.size() == 0)
-//        {
-//            Item item1 = new Item("item1", 1, 10);
-//
-//            Item item2 = new Item("item2", 1, 15);
-//
-//            MenuItems.add(item1);
-//            MenuItems.add(item2);
-//        }
-
         PopulateMenuItemsFromDatabase();
 
         model.put("MenuItems", MenuItems);
@@ -54,9 +38,6 @@ public class IndexController {
         }
 
         CurrentUser.currentUserName = username;
-
-
-        //CurrentUser.currentView = "home";
 
         if(!CartExists(username))
         {
@@ -153,9 +134,6 @@ public class IndexController {
 
     public static boolean hasRole (String roleName)
     {
-//        return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-//                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(roleName));
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         boolean hasUserRole = authentication.getAuthorities().stream()

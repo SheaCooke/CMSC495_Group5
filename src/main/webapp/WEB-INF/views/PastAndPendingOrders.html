@@ -19,17 +19,15 @@
     <a class="logout" href="/Logout">Log Out</a>
 </div>
 
-    <h3 style="text-align: center;">pending orders</h3>
+    <h3 style="text-align: center;">Pending orders</h3>
     <div th:if="${not #lists.isEmpty(CurrentPendingOrders)}">
 
         <table id="displayTable">
             <tbody th:each="Order : ${CurrentPendingOrders}">
-
             <tr>
                 <th>Name</th>
                 <th>Price</th>
                 <th>Quantity</th>
-
             </tr>
 
             <tr th:each="Item : ${Order.ItemsInOrder}">

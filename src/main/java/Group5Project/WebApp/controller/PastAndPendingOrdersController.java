@@ -59,7 +59,6 @@ public class PastAndPendingOrdersController {
             Type type = new TypeToken<List<Item>>() {}.getType();
 
             String storedList = rs.getString("Items");
-            //JSONObject obj = new JSONObject(jsonString);
 
             List<Item> items = gson.fromJson(storedList, type);
 

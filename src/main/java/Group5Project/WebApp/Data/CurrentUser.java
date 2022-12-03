@@ -26,7 +26,6 @@ public class CurrentUser {
         {
             return 0;
         }
-
     }
 
     public static void IncrementNotificationCount(String username)
@@ -44,8 +43,6 @@ public class CurrentUser {
         }
         catch (NoSuchElementException exception)
         {}
-
     }
 
-    //get list of usernames from db
 }

@@ -44,12 +44,6 @@ public class RegisterController {
 
     private UserDto _dto = new UserDto();
 
-//
-//
-//    public RegisterController(InMemoryUserDetailsManager inMemoryUserDetailsManager) {
-//        this.inMemoryUserDetailsManager = inMemoryUserDetailsManager;
-//    }
-
     @GetMapping("/Login")
     public String login (Model model) throws SQLException {
 
@@ -88,30 +82,11 @@ public class RegisterController {
 
         successMessages.clear();
 
-          //  grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
-
-            //UserDetails user = new User("test", "test", grantedAuthorities);
-
-//            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, grantedAuthorities);
-//
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-              //  inMemoryUserDetailsManager.createUser();
-
         //validate account information
         validateInformation(dto.getPassword(), dto.getVerifyPassword(), dto.getUsername(), dto.getEmail(), dto.getStudentID());
 
         if (validRegistrationInformation)
         {
-            //create new user object
-//            UserModel newUser = new UserModel(dto.getEmail(), dto.getUsername(), dto.getPassword(), dto.getStudentID());
-//
-//            UserModelCollection.Users.add(newUser);
-//
-//            User.UserBuilder user = User.withDefaultPasswordEncoder();
-//
-//            inMemoryUserDetailsManager.createUser(user.username(dto.getUsername()).password(dto.getPassword()).roles("USER").build());
-
             _dto = new UserDto();
 
             successMessages.add("Successfully registered account");

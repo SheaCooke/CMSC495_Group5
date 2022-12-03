@@ -33,7 +33,6 @@ import static Group5Project.WebApp.controller.IndexController.GetCartByUserName;
 
 @Controller
 public class CartController {
-
     @GetMapping("Cart")
     public String Cart (Map<String, Object> model) {
 
@@ -45,7 +44,6 @@ public class CartController {
 
         return "Cart";
     }
-
 
     @PostMapping("/Checkout")
     public String Checkout() {
