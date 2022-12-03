@@ -1,7 +1,12 @@
 package Group5Project.WebApp.controller;
 
 import Group5Project.WebApp.Data.*;
+import Group5Project.WebApp.model.Item;
+import Group5Project.WebApp.model.Order;
+import Group5Project.WebApp.model.QueryModels.ItemPopularity;
 import Group5Project.WebApp.model.UserModel;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,13 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static Group5Project.WebApp.Data.Menu.MenuItems;
 import static Group5Project.WebApp.Data.Menu.PopulateMenuItemsFromDatabase;
@@ -26,6 +30,8 @@ import static Group5Project.WebApp.WebAppApplication.connection;
 public class AdminController {
 
     private List<UserModel> query_userAccounts = new ArrayList<UserModel>();
+
+    private List<ItemPopularity> query_ItemPopularity = new ArrayList<ItemPopularity>();
 
     private List<String> errorMessages = new ArrayList<String>();
 
@@ -115,6 +121,7 @@ public class AdminController {
     public String queryDatabaseHome (Map<String, Object> model) throws SQLException {
 
         model.put("UserAccounts", query_userAccounts);
+        model.put("ItemPopularity", query_ItemPopularity);
 
         return "queryDatabase";
     }
@@ -122,8 +129,21 @@ public class AdminController {
     @GetMapping("/queryDatabase/getUserAccounts")
     public String GetUserAccounts (Map<String, Object> model) throws SQLException {
         //clear all other collections
+        query_ItemPopularity.clear();
 
         LoadUsersFromDatabase();
+
+        return "redirect:/queryDatabase";
+    }
+
+    @GetMapping("/queryDatabase/getItemPopularity")
+    public String GetItemPopularity (Map<String, Object> model) throws SQLException {
+        //clear all other collections
+        query_userAccounts.clear();
+
+        LoadItemPopularity();
+
+
 
         return "redirect:/queryDatabase";
     }
@@ -152,7 +172,66 @@ public class AdminController {
         }
     }
 
+    private void LoadItemPopularity() throws SQLException
+    {
+        query_ItemPopularity.clear();
 
+        Gson gson = new Gson();
 
+        String sql = "select * from Order_History";
+
+        PreparedStatement ps = connection.prepareStatement(sql);
+
+        ResultSet rs = ps.executeQuery();
+
+        Map<String, Integer> popularityMap = new HashMap<String, Integer>();
+
+        while (rs.next())
+        {
+            Type type = new TypeToken<List<Item>>() {}.getType();
+
+            String storedList = rs.getString("Items");
+
+            List<Item> items = gson.fromJson(storedList, type);
+
+           for (var i : items)
+           {
+                //check if item has already been found
+               //if found, increase count by quantity
+               if (popularityMap.containsKey(i.ItemName))
+               {
+                   int currentCount = popularityMap.get(i.ItemName);
+
+                   int newCount = currentCount + i.Quantity;
+
+                   popularityMap.put(i.ItemName, newCount);
+               }
+               else//otherwise add to dictionary with count of 1
+               {
+                   popularityMap.put(i.ItemName, i.Quantity);
+               }
+
+           }
+        }
+
+        //iterate over map and create itemPopularity objects
+        for (Map.Entry<String, Integer> kvp : popularityMap.entrySet())
+        {
+            String name = kvp.getKey();
+            int count = kvp.getValue();
+
+            ItemPopularity itemPopularity = new ItemPopularity(name, count);
+
+            query_ItemPopularity.add(itemPopularity);
+        }
+
+        // Sort query_ItemPopularity in ascending order
+        Collections.sort(query_ItemPopularity, new Comparator<ItemPopularity>(){
+            public int compare(ItemPopularity o1, ItemPopularity o2) {
+                return o1.quantityOrdered.compareTo(o2.quantityOrdered);
+            }
+        });
+
+    }
 
 }

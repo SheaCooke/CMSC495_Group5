@@ -153,7 +153,7 @@
     <br>
     <button class="buttonClass" onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Calculate Total Income</button>
     <br>
-    <form action="/admin/UpdateItem" method="get">
+    <form action="/queryDatabase/getItemPopularity" method="get">
         <button class="buttonClass" style="width:auto;">Find Item Popularity</button>
     </form>
 
@@ -204,7 +204,7 @@
 </div>
 
 
-
+<!-- User account query-->
 <div th:if="${not #lists.isEmpty(UserAccounts)}">
     <table id="displayTable">
         <tr>
@@ -216,6 +216,20 @@
             <td th:text="${user.studentID}"></td>
             <td th:text="${user.email}"></td>
             <td th:text="${user.username}"></td>
+        </tr>
+    </table>
+</div>
+
+<!--Item popularity query-->
+<div th:if="${not #lists.isEmpty(ItemPopularity)}">
+    <table id="displayTable">
+        <tr>
+            <th>Item Name</th>
+            <th>Number of times ordered</th>
+        </tr>
+        <tr th:each="item : ${ItemPopularity}">
+            <td th:text="${item.itemName}"></td>
+            <td th:text="${item.quantityOrdered}"></td>
         </tr>
     </table>
 </div>
