@@ -53,7 +53,6 @@ public class CartController {
         //create timer task
         TimerHelper timerHelper = new TimerHelper();
 
-        //timerHelper.ID = order.ID;
         timerHelper.tempID = order.TempID;
 
         Timer timer = new Timer(true);
@@ -69,26 +68,19 @@ public class CartController {
 
     class TimerHelper extends TimerTask
     {
-        //public int ID;
-
         public UUID tempID;
         @SneakyThrows
         @Override
         public void run()
         {
-            //Order order = CurrentPendingOrders.stream().filter(i -> i.ID == ID).findFirst().get();
             Order order = CurrentPendingOrders.stream().filter(i -> i.TempID.equals(tempID)).findFirst().get();
-
 
             createCompletedOrderInDB(order);
 
             //remove from Pending orders
-            //CurrentPendingOrders.removeIf(x -> x.ID == ID);
             CurrentPendingOrders.removeIf(x -> x.TempID.equals(tempID));
 
-
             //add to completed orders
-
             CompletedOrdersList.add(order);
 
             IncrementNotificationCount(UserManager.currentUserName);
@@ -108,25 +100,6 @@ public class CartController {
 
             statement.execute(sql);
         }
-
-//        private String getDayMonthYear()
-//        {
-//
-//            Date date = new Date();
-//
-//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd");
-//            String day = simpleDateFormat.format(date);
-//
-//            simpleDateFormat = new SimpleDateFormat("MMMM");
-//            String month = simpleDateFormat.format(date).toUpperCase();
-//
-//            simpleDateFormat = new SimpleDateFormat("YYYY");
-//            String year = simpleDateFormat.format(date).toUpperCase();
-//
-//            String res = day+ "-" + month + "-" + year;
-//
-//            return res;
-//        }
 
         private String getUserIDByUserName(String username)
         {

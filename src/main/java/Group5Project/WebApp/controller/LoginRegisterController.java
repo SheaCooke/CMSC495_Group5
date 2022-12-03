@@ -31,7 +31,7 @@ import static Group5Project.WebApp.WebAppApplication.connection;
 
 @NoArgsConstructor
 @Controller
-public class RegisterController {
+public class LoginRegisterController {
 
     @Autowired
     private InMemoryUserDetailsManager inMemoryUserDetailsManager;
@@ -204,14 +204,6 @@ public class RegisterController {
     {
         return studentID.length() == 7 && helperMethods.tryParseInt(studentID) != -1;
     }
-
-//    public int tryParseInt(String value) {
-//        try {
-//            return Integer.parseInt(value);
-//        } catch (NumberFormatException e) {
-//            return -1;
-//        }
-//    }
 
     private void trimDTOFields(UserDto dto)
     {

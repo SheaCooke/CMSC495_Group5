@@ -74,28 +74,5 @@ public class PastAndPendingOrdersController {
             CompletedOrdersList.add(order);
         }
     }
-//    private String getUsernameFromUserID(int userId)
-//    {
-//        String idString = String.valueOf(userId);
-//
-//        return Users.stream().filter(i -> i.getStudentID().equals(idString)).findFirst().get().getUsername();
-//    }
-//
-//    private List<Order> Get5RecentOrdersForUser(String username)
-//    {
-//        List<Order> ordersByUserName =
-//            CompletedOrdersList.stream().filter(p -> p.userName.equals(UserManager.currentUserName))
-//                    .collect(Collectors.toList());
-//
-//        Collections.sort(ordersByUserName, new Comparator<Order>(){
-//            public int compare(Order o1, Order o2) {
-//                return o1.CompletedDate.compareTo(o2.CompletedDate);
-//            }
-//        });
-//
-//        int listSize = ordersByUserName.size();
-//
-//        return ordersByUserName.subList(Math.max(listSize - 5, 0), listSize);
-//    }
 
 }

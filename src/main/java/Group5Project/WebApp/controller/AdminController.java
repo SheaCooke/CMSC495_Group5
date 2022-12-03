@@ -1,21 +1,31 @@
 package Group5Project.WebApp.controller;
 
 import Group5Project.WebApp.Data.*;
+import Group5Project.WebApp.model.UserModel;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static Group5Project.WebApp.Data.Menu.MenuItems;
 import static Group5Project.WebApp.Data.Menu.PopulateMenuItemsFromDatabase;
+import static Group5Project.WebApp.Data.UserManager.*;
 import static Group5Project.WebApp.WebAppApplication.connection;
 
 @Controller
 public class AdminController {
+
+    private List<UserModel> query_userAccounts = new ArrayList<UserModel>();
 
     private List<String> errorMessages = new ArrayList<String>();
 
@@ -100,12 +110,49 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-//    public double tryParseDouble(String value, double defaultVal) {
-//        try {
-//            return Double.parseDouble(value);
-//        } catch (NumberFormatException e) {
-//            return defaultVal;
-//        }
-//    }
+
+    @GetMapping("/queryDatabase")
+    public String queryDatabaseHome (Map<String, Object> model) throws SQLException {
+
+        model.put("UserAccounts", query_userAccounts);
+
+        return "queryDatabase";
+    }
+
+    @GetMapping("/queryDatabase/getUserAccounts")
+    public String GetUserAccounts (Map<String, Object> model) throws SQLException {
+        //clear all other collections
+
+        LoadUsersFromDatabase();
+
+        return "redirect:/queryDatabase";
+    }
+
+
+    private void LoadUsersFromDatabase() throws SQLException {
+
+        query_userAccounts.clear();
+
+        String sql = "select * from Customer_Accounts";
+
+        PreparedStatement ps = connection.prepareStatement(sql);
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next())
+        {
+            String Username = rs.getString("Username");
+            String ID = rs.getString("C_AID");
+            String Email = rs.getString("Email");
+            String Password = rs.getString("Password");
+
+            UserModel newUser = new UserModel(Email, Username, Password, ID);
+
+            query_userAccounts.add(newUser);
+        }
+    }
+
+
+
 
 }
