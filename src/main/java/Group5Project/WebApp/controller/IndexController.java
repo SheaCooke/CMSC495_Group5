@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -20,10 +22,15 @@ import static Group5Project.WebApp.Data.Menu.PopulateMenuItemsFromDatabase;
 @Controller
 public class IndexController {
 
+    private List<String> errorMessages = new ArrayList<String>();
+
+
     @GetMapping("/")
     public String home (Map<String, Object> model) throws SQLException {
 
         PopulateMenuItemsFromDatabase();
+
+        model.put("errors", errorMessages);
 
         model.put("MenuItems", MenuItems);
 
@@ -72,11 +79,25 @@ public class IndexController {
     @PostMapping("/AddToCart/{ID}")
     public String AddToCart(@PathVariable final int ID) {
 
+        Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
+
+        //check for max cart quantity
+        if (GetCartQuantity(cartToModoify) >= 20)
+        {
+            if (errorMessages.size() == 0)
+            {
+                errorMessages.add("Your cart is at its max capacity of 20 items");
+            }
+            return "redirect:/";
+        }
+        else
+        {
+            errorMessages.clear();
+        }
+
         Item itemToClone = MenuItems.stream().filter(i -> i.ID == ID).findFirst().get();
 
         Item itemToAdd = new Item(itemToClone.ID, itemToClone.ItemName, 1, itemToClone.Price, itemToClone.Description, itemToClone.Category);
-
-        Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
 
         cartToModoify.addItem(itemToAdd);
 
@@ -113,6 +134,8 @@ public class IndexController {
             RemoveItem(ID);
         }
 
+        errorMessages.clear();
+
         return "redirect:/Cart";
     }
 
@@ -120,6 +143,21 @@ public class IndexController {
     public String IncramentItem(@PathVariable final int ID) {
 
         Cart cartToModoify = GetCartByUserName(CurrentUser.currentUserName);
+
+        //check for max cart quantity
+        if (GetCartQuantity(cartToModoify) >= 20)
+        {
+            if (errorMessages.size() == 0)
+            {
+                errorMessages.add("Your cart is at its max capacity of 20 items");
+            }
+
+            return "redirect:/Cart";
+        }
+        else
+        {
+            errorMessages.clear();
+        }
 
         for (var i : cartToModoify.ItemsInCart)
         {
@@ -165,6 +203,17 @@ public class IndexController {
     public static boolean CartExists(String username)
     {
         return CartCollection.AllCarts.stream().filter(i -> i.UserName.equals(username)).findFirst().isPresent();
+    }
+
+    public static int GetCartQuantity(Cart cart)
+    {
+        int quantity = 0;
+
+        for (Item item : cart.ItemsInCart)
+        {
+            quantity += item.Quantity;
+        }
+        return quantity;
     }
 
 

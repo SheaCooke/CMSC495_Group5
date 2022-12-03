@@ -99,6 +99,4 @@ public class PastAndPendingOrdersController {
         return ordersByUserName.subList(Math.max(listSize - 5, 0), listSize);
     }
 
-
-
 }

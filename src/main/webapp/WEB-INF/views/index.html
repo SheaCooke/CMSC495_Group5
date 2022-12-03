@@ -8,7 +8,10 @@
 
 </head>
 <style>
-
+    .centerErrors {
+      text-align: center;
+      color: red;
+    }
 </style>
 <body>
 
@@ -29,7 +32,15 @@
 
     <h3 th:text="'Welcome ' + ${un} + '!'"></h3>
     <p>Please select from the following menu</p>
+</div>
 
+<div class="centerErrors" th:if="${not #lists.isEmpty(errors)}">
+
+    <div th:each="message : ${errors}">
+
+        <p th:text="${message}"></p>
+
+    </div>
 </div>
 
 <br>
