@@ -157,21 +157,19 @@
 
 </div>
 
-
+<h3 style="text-align: center;">Appetizers</h3>
 
 <div th:if="${not #lists.isEmpty(MenuItems)}">
   <table id="displayTable">
     <tr>
       <th>Name</th>
       <th>Price</th>
-      <th>Category</th>
       <th>Description</th>
       <th> </th>
     </tr>
-    <tr th:each="Item : ${MenuItems}">
+    <tr th:each="Item : ${MenuItems}" th:if="${Item.Category} == 'appetizer'">
       <td th:text="${Item.ItemName}"></td>
       <td th:text="${Item.Price}"></td>
-      <td th:text="${Item.Category}"></td>
       <td th:text="${Item.Description}"></td>
       <td>
 
@@ -184,6 +182,62 @@
     </tr>
   </table>
 </div>
+
+
+<h3 style="text-align: center;">Entrees</h3>
+
+<div th:if="${not #lists.isEmpty(MenuItems)}">
+  <table id="displayTable">
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th> </th>
+    </tr>
+    <tr th:each="Item : ${MenuItems}" th:if="${Item.Category} == 'entree'">
+      <td th:text="${Item.ItemName}"></td>
+      <td th:text="${Item.Price}"></td>
+      <td th:text="${Item.Description}"></td>
+      <td>
+
+        <form role="form" method="post" th:object="${Item}" th:action="@{'/admin/DeleteItem/{ID}' (ID=${Item.ID})}">
+          <button type="submit">Delete</button>
+        </form>
+
+      </td>
+
+    </tr>
+  </table>
+</div>
+
+
+
+<h3 style="text-align: center;">Dessert</h3>
+
+<div th:if="${not #lists.isEmpty(MenuItems)}">
+  <table id="displayTable">
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th> </th>
+    </tr>
+    <tr th:each="Item : ${MenuItems}" th:if="${Item.Category} == 'dessert'">
+      <td th:text="${Item.ItemName}"></td>
+      <td th:text="${Item.Price}"></td>
+      <td th:text="${Item.Description}"></td>
+      <td>
+
+        <form role="form" method="post" th:object="${Item}" th:action="@{'/admin/DeleteItem/{ID}' (ID=${Item.ID})}">
+          <button type="submit">Delete</button>
+        </form>
+
+      </td>
+
+    </tr>
+  </table>
+</div>
+
 
 <div class="wrapper">
 <button class="buttonClass" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Create New Item</button>
@@ -200,7 +254,6 @@
 
       <input type="text" placeholder="Enter Name" name="ItemName" required>
 
-<!--      <input type="text" placeholder="Enter Category" name="ItemCategory" required>-->
       <label for="selectCategory">Category:</label>
       <select id="selectCategory" style="height:40px; width:200px;" required name="ItemCategory">
         <option value="appetizer">appetizer</option>

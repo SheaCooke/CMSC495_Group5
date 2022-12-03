@@ -9,5 +9,4 @@ import java.util.List;
 
 public class UserModelCollection {
 
-    public static List<UserModel> Users = new ArrayList<UserModel>();
 }

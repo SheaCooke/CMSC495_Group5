@@ -25,8 +25,7 @@ import java.time.ZoneId;
 import java.util.*;
 
 import static Group5Project.WebApp.Data.CompletedOrders.CompletedOrdersList;
-import static Group5Project.WebApp.Data.CurrentUser.GetNotificationsByUserName;
-import static Group5Project.WebApp.Data.CurrentUser.IncrementNotificationCount;
+import static Group5Project.WebApp.Data.CurrentUser.*;
 import static Group5Project.WebApp.Data.PendingOrders.CurrentPendingOrders;
 import static Group5Project.WebApp.WebAppApplication.connection;
 import static Group5Project.WebApp.controller.IndexController.GetCartByUserName;
@@ -60,7 +59,8 @@ public class CartController {
         //create timer task
         TimerHelper timerHelper = new TimerHelper();
 
-        timerHelper.ID = order.ID;
+        //timerHelper.ID = order.ID;
+        timerHelper.tempID = order.TempID;
 
         Timer timer = new Timer(true);
 
@@ -75,17 +75,23 @@ public class CartController {
 
     class TimerHelper extends TimerTask
     {
-        public int ID;
+        //public int ID;
+
+        public UUID tempID;
         @SneakyThrows
         @Override
         public void run()
         {
-            Order order = CurrentPendingOrders.stream().filter(i -> i.ID == ID).findFirst().get();
+            //Order order = CurrentPendingOrders.stream().filter(i -> i.ID == ID).findFirst().get();
+            Order order = CurrentPendingOrders.stream().filter(i -> i.TempID.equals(tempID)).findFirst().get();
+
 
             createCompletedOrderInDB(order);
 
             //remove from Pending orders
-            CurrentPendingOrders.removeIf(x -> x.ID == ID);
+            //CurrentPendingOrders.removeIf(x -> x.ID == ID);
+            CurrentPendingOrders.removeIf(x -> x.TempID.equals(tempID));
+
 
             //add to completed orders
 
@@ -130,7 +136,7 @@ public class CartController {
 
         private String getUserIDByUserName(String username)
         {
-            UserModel user = UserModelCollection.Users.stream().filter(i -> i.getUsername().equals(username)).findFirst().get();
+            UserModel user = Users.stream().filter(i -> i.getUsername().equals(username)).findFirst().get();
 
             String res = user.getStudentID();
 

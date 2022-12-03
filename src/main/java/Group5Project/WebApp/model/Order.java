@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Order {
 
-    //public UUID ID = java.util.UUID.randomUUID();
+    public UUID TempID = java.util.UUID.randomUUID();
 
     public int ID;
     public List<Item> ItemsInOrder = new ArrayList<>();

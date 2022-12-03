@@ -18,8 +18,7 @@ import java.sql.Statement;
 import java.util.*;
 import java.util.stream.Collectors;
 import static Group5Project.WebApp.Data.CompletedOrders.CompletedOrdersList;
-import static Group5Project.WebApp.Data.CurrentUser.GetNotificationsByUserName;
-import static Group5Project.WebApp.Data.CurrentUser.ResetNotificationCount;
+import static Group5Project.WebApp.Data.CurrentUser.*;
 import static Group5Project.WebApp.Data.PendingOrders.CurrentPendingOrders;
 import static Group5Project.WebApp.WebAppApplication.connection;
 
@@ -65,13 +64,21 @@ public class PastAndPendingOrdersController {
             int id = rs.getInt("orderID");
 
             double Price = rs.getDouble("Price");
+
             String CompletedDate = rs.getString("Date");
 
-            Order order = new Order(id, items, Price, "username1", CompletedDate);
+            int studentID = rs.getInt("C_AID_FK");
+
+            Order order = new Order(id, items, Price, getUsernameFromUserID(studentID), CompletedDate);
 
             CompletedOrdersList.add(order);
         }
+    }
+    private String getUsernameFromUserID(int userId)
+    {
+        String idString = String.valueOf(userId);
 
+        return Users.stream().filter(i -> i.getStudentID().equals(idString)).findFirst().get().getUsername();
     }
 
 }

@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static Group5Project.WebApp.Data.CurrentUser.Users;
 import static Group5Project.WebApp.WebAppApplication.connection;
 
 @NoArgsConstructor
@@ -35,7 +36,7 @@ import static Group5Project.WebApp.WebAppApplication.connection;
 public class RegisterController {
 
     @Autowired
-   private InMemoryUserDetailsManager inMemoryUserDetailsManager;
+    private InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
     private boolean validRegistrationInformation = true;
 
@@ -159,7 +160,7 @@ public class RegisterController {
 
     private boolean UsernameAvailable(String username)
     {
-        return !UserModelCollection.Users.stream().filter(i -> i.getUsername().toLowerCase().equals(username.toLowerCase()))
+        return !Users.stream().filter(i -> i.getUsername().toLowerCase().equals(username.toLowerCase()))
                 .findFirst().isPresent();
     }
 
@@ -245,7 +246,7 @@ public class RegisterController {
 
             UserModel newUser = new UserModel(Email, Username, Password, ID);
 
-            UserModelCollection.Users.add(newUser);
+            Users.add(newUser);
 
             User.UserBuilder user = User.withUsername(Username);
 
