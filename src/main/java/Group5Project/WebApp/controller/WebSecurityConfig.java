@@ -14,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -61,57 +63,20 @@ public class WebSecurityConfig  {
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
 
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
         UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
+                User.withUsername("user")
+                        .password(encoder.encode("password"))
                         .roles("USER")
                         .build();
 
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin")
+        UserDetails admin = User.withUsername("admin")
+                .password(encoder.encode("admin"))
                 .roles("ADMIN")
                 .build();
-//encoder().encode("adminPass")
-
 
         return new InMemoryUserDetailsManager(user, admin);
     }
-
-//
-//    @Override
-//    protected void configure(final HttpSecurity http) throws Exception {
-//
-//        //@formatter:off
-//        http.authorizeRequests()
-//                .antMatchers("/Login").permitAll()
-//                .antMatchers("/**").hasAnyRole("USER", "ADMIN")
-//                .antMatchers("/admin/**").hasAnyRole("ADMIN")
-//                .and()
-//                .formLogin()
-//                .loginPage("/Login")
-//                .loginProcessingUrl("/process-login")
-//                .defaultSuccessUrl("/")
-//                .failureUrl("/login?error=true")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .logoutSuccessUrl("/login?logout=true")
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID")
-//                .permitAll()
-//                .and()
-//                .csrf()
-//                .disable();
-//        //@formatter:on
-//    }
-//
-//    @Override
-//    public void configure(WebSecurity web) {
-//        web.ignoring()
-//                .antMatchers("/resources/**", "/static/**");
-//    }
 
 }

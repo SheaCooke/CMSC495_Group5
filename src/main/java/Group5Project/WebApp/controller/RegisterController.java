@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,7 @@ public class RegisterController {
 
     private List<String> successMessages = new ArrayList<String>();
 
+    private static PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     private UserDto _dto = new UserDto();
 
@@ -93,7 +96,7 @@ public class RegisterController {
 
             String sql = String.format("insert into Customer_Accounts " +
                             "values ('%1$s', '%2$s', '%3$s', '%4$s')",
-                    dto.getStudentID(), dto.getEmail(), dto.getUsername(), dto.getPassword());
+                    dto.getStudentID(), dto.getEmail(), dto.getUsername(), encoder.encode(dto.getPassword()));
 
             Statement statement = connection.createStatement();
 
@@ -244,10 +247,9 @@ public class RegisterController {
 
             UserModelCollection.Users.add(newUser);
 
-            User.UserBuilder user = User.withDefaultPasswordEncoder();
+            User.UserBuilder user = User.withUsername(Username);
 
-            inMemoryUserDetailsManager.createUser(user.username(Username).password(Password).roles("USER").build());
-
+            inMemoryUserDetailsManager.createUser(user.password(Password).roles("USER").build());
         }
     }
 
