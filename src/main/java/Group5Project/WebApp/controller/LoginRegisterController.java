@@ -101,7 +101,16 @@ public class LoginRegisterController {
 
             Statement statement = connection.createStatement();
 
-            statement.execute(sql);
+            try
+            {
+                statement.execute(sql);
+            }
+            catch (Exception e)
+            {
+                errorMessages.add("Student ID is already in use.");
+                validRegistrationInformation = false;
+                return "redirect:Login";
+            }
 
         }
 
@@ -136,6 +145,19 @@ public class LoginRegisterController {
         {
             validRegistrationInformation = false;
             errorMessages.add("Must use a UMGC email");
+        }
+        //check if email is available
+        if (!EmailIsAvailable(email))
+        {
+            validRegistrationInformation = false;
+            errorMessages.add("Email is already in use");
+        }
+
+        //check if student id is available
+        if (!StudentIDIsAvailable(studentID))
+        {
+            validRegistrationInformation = false;
+            errorMessages.add("Student ID is already in use");
         }
 
         if (!PasswordRequirements(password))
@@ -172,6 +194,16 @@ public class LoginRegisterController {
         }
 
         return email.substring(email.length() - 8).equals("umgc.edu");
+    }
+
+    private boolean EmailIsAvailable(String email)
+    {
+        return !Users.stream().filter(i -> i.getEmail().equals(email)).findFirst().isPresent();
+    }
+
+    private boolean StudentIDIsAvailable(String id)
+    {
+        return !Users.stream().filter(i -> i.getStudentID().equals(id)).findFirst().isPresent();
     }
 
     private boolean PasswordRequirements(String password)
