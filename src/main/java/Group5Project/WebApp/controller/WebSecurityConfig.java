@@ -32,13 +32,15 @@ public class WebSecurityConfig  {
         http
 
                 .csrf()
-                .ignoringAntMatchers("/register", "/admin/AddNewItem", "/admin/UpdateItem", "/admin/DeleteItem/*")
+                .ignoringAntMatchers("/register", "/admin/AddNewItem", "/admin/UpdateItem", "/admin/DeleteItem/*",
+                        "/queryDatabase/getOrdersByUserName")
                 .and()
                 .authorizeRequests((requests) -> requests
                         .antMatchers("/admin").hasRole("ADMIN")
                         .antMatchers(HttpMethod.POST,"/admin/AddNewItem").hasRole("ADMIN")
                         .antMatchers(HttpMethod.POST,"/admin/UpdateItem").hasRole("ADMIN")
                         .antMatchers(HttpMethod.POST,"/admin/DeleteItem/*").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.POST,"/queryDatabase/getOrdersByUserName").hasRole("ADMIN")
                         .antMatchers("/query").hasRole("ADMIN")
                         .antMatchers("/Cart").hasRole("USER")
                         .antMatchers("/PastAndPendingOrders").hasRole("USER")

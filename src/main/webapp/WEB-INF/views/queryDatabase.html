@@ -161,14 +161,14 @@
 
 <div id="id01" class="modal">
 
-    <form class="modal-content animate" action="/admin/AddNewItem" th:object="${dto}" method="post">
+    <form class="modal-content animate" th:object="${ordersByUsernameModel}" action="/queryDatabase/getOrdersByUserName" method="post">
         <div class="imgcontainer">
             <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
         </div>
 
         <div class="container">
 
-            <input type="text" placeholder="Enter username" name="username" required>
+            <input type="text" placeholder="Enter user ID" name="UserID" required>
 
             <button class="buttonClass" type="submit">Search</button>
 
@@ -233,6 +233,41 @@
         </tr>
     </table>
 </div>
+
+<!--Orders by user query-->
+<div th:if="${not #lists.isEmpty(OrdersByUsername)}">
+    <table id="displayTable">
+        <tbody th:each="Order : ${OrdersByUsername}">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        <tr th:each="Item2 : ${Order.ItemsInOrder}">
+            <td th:text="${Item2.ItemName}"></td>
+            <td th:text="${Item2.Price}"></td>
+            <td th:text="${Item2.Quantity}"></td>
+        </tr>
+        <tr>
+            <th>Total Price</th>
+            <th>Completed On</th>
+            <th>Order ID</th>
+        </tr>
+        <tr>
+            <td th:text="${Order.TotalPrice}"></td>
+            <td th:text="${Order.CompletedDate}"></td>
+            <td th:text="${Order.ID}"></td>
+        </tr>
+        <tr style="background-color: black;">
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
 
 
 </body>

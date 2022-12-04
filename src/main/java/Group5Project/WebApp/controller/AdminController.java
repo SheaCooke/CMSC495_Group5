@@ -4,12 +4,10 @@ import Group5Project.WebApp.Data.*;
 import Group5Project.WebApp.model.Item;
 import Group5Project.WebApp.model.Order;
 import Group5Project.WebApp.model.QueryModels.ItemPopularity;
+import Group5Project.WebApp.model.QueryModels.OrdersByUserQueryDto;
 import Group5Project.WebApp.model.UserModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +21,6 @@ import java.util.*;
 
 import static Group5Project.WebApp.Data.Menu.MenuItems;
 import static Group5Project.WebApp.Data.Menu.PopulateMenuItemsFromDatabase;
-import static Group5Project.WebApp.Data.UserManager.*;
 import static Group5Project.WebApp.WebAppApplication.connection;
 
 @Controller
@@ -33,9 +30,14 @@ public class AdminController {
 
     private List<ItemPopularity> query_ItemPopularity = new ArrayList<ItemPopularity>();
 
+    private List<Order> query_OrdersByUsername = new ArrayList<Order>();
+
+
     private List<String> errorMessages = new ArrayList<String>();
 
     private HelperMethods helperMethods = new HelperMethods();
+
+    private OrdersByUserQueryDto OrdersByUsernameModel = new OrdersByUserQueryDto();
 
     @GetMapping("/admin")
     public String admin (Model model) throws SQLException{
@@ -122,6 +124,10 @@ public class AdminController {
 
         model.put("UserAccounts", query_userAccounts);
         model.put("ItemPopularity", query_ItemPopularity);
+        model.put("OrdersByUsername", query_OrdersByUsername);
+
+        model.put("ordersByUsernameModel", new OrdersByUserQueryDto());
+
 
         return "queryDatabase";
     }
@@ -130,6 +136,7 @@ public class AdminController {
     public String GetUserAccounts (Map<String, Object> model) throws SQLException {
         //clear all other collections
         query_ItemPopularity.clear();
+        query_OrdersByUsername.clear();
 
         LoadUsersFromDatabase();
 
@@ -140,9 +147,21 @@ public class AdminController {
     public String GetItemPopularity (Map<String, Object> model) throws SQLException {
         //clear all other collections
         query_userAccounts.clear();
+        query_OrdersByUsername.clear();
+
 
         LoadItemPopularity();
 
+        return "redirect:/queryDatabase";
+    }
+
+    @PostMapping("/queryDatabase/getOrdersByUserName")
+    public String GetOrdersByUserName(Model model, OrdersByUserQueryDto dto) throws SQLException {
+
+        query_userAccounts.clear();
+        query_ItemPopularity.clear();
+
+        LoadOrdersByUser(dto.getUserID());
 
 
         return "redirect:/queryDatabase";
@@ -232,6 +251,45 @@ public class AdminController {
             }
         });
 
+    }
+
+    private void LoadOrdersByUser(String userID) throws SQLException {
+
+        System.out.println("User ID: " + userID);
+
+        query_OrdersByUsername.clear();
+
+        Gson gson = new Gson();
+
+        //String sql = "select * from Order_History where C_AID_FK == 2222222";
+
+        String sql = String.format("select * from Order_History where C_AID_FK == '%1$s'", userID);
+
+        PreparedStatement ps = connection.prepareStatement(sql);
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next())
+        {
+            Type type = new TypeToken<List<Item>>() {}.getType();
+
+            String storedList = rs.getString("Items");
+
+            List<Item> items = gson.fromJson(storedList, type);
+
+            int id = rs.getInt("orderID");
+
+            double Price = rs.getDouble("Price");
+
+            String CompletedDate = rs.getString("Date");
+
+            int studentID = rs.getInt("C_AID_FK");
+
+            Order order = new Order(id, items, Price, helperMethods.getUsernameFromUserID(studentID), CompletedDate);
+
+            query_OrdersByUsername.add(order);
+
+        }
     }
 
 }
