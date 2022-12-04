@@ -55,12 +55,12 @@ public class HelperMethods {
         return res;
     }
 
-    public static boolean CartExists(String username)
+    public boolean CartExists(String username)
     {
         return CartCollection.AllCarts.stream().filter(i -> i.UserName.equals(username)).findFirst().isPresent();
     }
 
-    public static int GetCartQuantity(Cart cart)
+    public int GetCartQuantity(Cart cart)
     {
         int quantity = 0;
 
@@ -71,7 +71,7 @@ public class HelperMethods {
         return quantity;
     }
 
-    public static Cart GetCartByUserName(String username)
+    public Cart GetCartByUserName(String username)
     {
         if (CartExists(username))
         {
@@ -84,7 +84,7 @@ public class HelperMethods {
 
     }
 
-    public static boolean hasRole (String roleName)
+    public boolean hasRole (String roleName)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -94,7 +94,7 @@ public class HelperMethods {
         return hasUserRole;
     }
 
-    public static void RemoveItem(int ID)
+    public void RemoveItem(int ID)
     {
         Cart cartToModoify = GetCartByUserName(UserManager.currentUserName);
 
