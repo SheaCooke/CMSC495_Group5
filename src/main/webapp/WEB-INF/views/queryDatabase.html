@@ -151,8 +151,9 @@
     </form>
     <button class="buttonClass" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Get Orders By User</button>
     <br>
-    <button class="buttonClass" onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Calculate Total Income</button>
-    <br>
+    <form action="/queryDatabase/getTotalIncome" method="get">
+        <button class="buttonClass" style="width:auto;">Calculate Total Income</button>
+    </form>
     <form action="/queryDatabase/getItemPopularity" method="get">
         <button class="buttonClass" style="width:auto;">Find Item Popularity</button>
     </form>
@@ -179,30 +180,6 @@
         </div>
     </form>
 </div>
-
-
-<div id="id02" class="modal">
-
-    <form class="modal-content animate" action="/admin/UpdateItem" th:object="${dto}" method="post">
-        <div class="imgcontainer">
-            <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-        </div>
-
-        <div class="container">
-
-            <label for="date">Income since: dd/mm/yyyy </label>
-            <input id="date" type="text" placeholder="Enter date" name="date" required>
-
-            <button class="buttonClass" type="submit">Search</button>
-
-        </div>
-
-        <div class="container" style="background-color:#f1f1f1">
-            <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
-        </div>
-    </form>
-</div>
-
 
 <!-- User account query-->
 <div th:if="${not #lists.isEmpty(UserAccounts)}">
@@ -265,7 +242,21 @@
         </tr>
         </tbody>
     </table>
+</div>
 
+
+<!-- Total Income Query -->
+<div th:if="${not #lists.isEmpty(TotalIncome)}">
+    <table id="displayTable">
+        <tr>
+            <th>Number of Orders</th>
+            <th>Total Income</th>
+        </tr>
+        <tr th:each="income : ${TotalIncome}">
+            <td th:text="${income.numberOfOrders}"></td>
+            <td th:text="${income.totalIncome}"></td>
+        </tr>
+    </table>
 </div>
 
 
