@@ -37,7 +37,7 @@
     </tr>
     <tr th:each="Item : ${ItemsInCart}">
       <td th:text="${Item.ItemName}"></td>
-      <td th:text="${Item.Price}"></td>
+      <td th:text="'$'+${Item.Price}"></td>
       <td th:text="${Item.Quantity}"> </td>
       <td>
         <form role="form" method="post" th:object="${Item}" th:action="@{'/RemoveFromCart/{ID}' (ID=${Item.ID})}">

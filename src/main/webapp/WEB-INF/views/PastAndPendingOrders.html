@@ -32,16 +32,16 @@
 
             <tr th:each="Item : ${Order.ItemsInOrder}">
                 <td th:text="${Item.ItemName}"></td>
-                <td th:text="${Item.Price}"></td>
+                <td th:text="'$'+${#numbers.formatDecimal(Item.Price, 0, 'COMMA', 2, 'POINT')}"></td>
                 <td th:text="${Item.Quantity}"></td>
             </tr>
             <tr>
                 <th>Total Price</th>
                 <th>Estimated Time Remaining</th>
-                <th>Order ID</th>
+                <th></th>
             </tr>
             <tr>
-                <td th:text="${Order.TotalPrice}"></td>
+                <td th:text="'$'+${#numbers.formatDecimal(Order.TotalPrice, 0, 'COMMA', 2, 'POINT')}"></td>
                 <td>
 
                     <p  class="card-text" th:id="'timer-' + ${Order.ID}"></p>
@@ -77,7 +77,7 @@
                     </script>
 
                 </td>
-                <td th:text="${Order.ID}"></td>
+                <td></td>
             </tr>
             <br>
             <br>
@@ -108,7 +108,7 @@
 
     <tr th:each="Item2 : ${Order.ItemsInOrder}">
         <td th:text="${Item2.ItemName}"></td>
-        <td th:text="${Item2.Price}"></td>
+        <td th:text="'$'+${#numbers.formatDecimal(Item2.Price, 0, 'COMMA', 2, 'POINT')}"></td>
         <td th:text="${Item2.Quantity}"></td>
     </tr>
     <tr>
@@ -117,7 +117,7 @@
         <th>Order ID</th>
     </tr>
     <tr>
-        <td th:text="${Order.TotalPrice}"></td>
+        <td th:text="'$'+${#numbers.formatDecimal(Order.TotalPrice, 0, 'COMMA', 2, 'POINT')}"></td>
         <td th:text="${Order.CompletedDate}"></td>
         <td th:text="${Order.ID}"></td>
     </tr>

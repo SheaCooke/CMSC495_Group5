@@ -222,7 +222,7 @@
         </tr>
         <tr th:each="Item2 : ${Order.ItemsInOrder}">
             <td th:text="${Item2.ItemName}"></td>
-            <td th:text="${Item2.Price}"></td>
+            <td th:text="'$'+${#numbers.formatDecimal(Item2.Price, 0, 'COMMA', 2, 'POINT')}"></td>
             <td th:text="${Item2.Quantity}"></td>
         </tr>
         <tr>
@@ -231,7 +231,7 @@
             <th>Order ID</th>
         </tr>
         <tr>
-            <td th:text="${Order.TotalPrice}"></td>
+            <td th:text="'$'+${#numbers.formatDecimal(Order.TotalPrice, 0, 'COMMA', 2, 'POINT')}"></td>
             <td th:text="${Order.CompletedDate}"></td>
             <td th:text="${Order.ID}"></td>
         </tr>
@@ -254,7 +254,7 @@
         </tr>
         <tr th:each="income : ${TotalIncome}">
             <td th:text="${income.numberOfOrders}"></td>
-            <td th:text="${income.totalIncome}"></td>
+            <td th:text="'$'+${#numbers.formatDecimal(income.totalIncome, 0, 'COMMA', 2, 'POINT')}"></td>
         </tr>
     </table>
 </div>

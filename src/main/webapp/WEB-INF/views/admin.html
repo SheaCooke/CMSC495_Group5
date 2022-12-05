@@ -169,7 +169,7 @@
     </tr>
     <tr th:each="Item : ${MenuItems}" th:if="${Item.Category} == 'appetizer'">
       <td th:text="${Item.ItemName}"></td>
-      <td th:text="${Item.Price}"></td>
+      <td th:text="'$'+${#numbers.formatDecimal(Item.Price, 0, 'COMMA', 2, 'POINT')}"></td>
       <td th:text="${Item.Description}"></td>
       <td>
 
@@ -196,7 +196,7 @@
     </tr>
     <tr th:each="Item : ${MenuItems}" th:if="${Item.Category} == 'entree'">
       <td th:text="${Item.ItemName}"></td>
-      <td th:text="${Item.Price}"></td>
+      <td th:text="'$'+${#numbers.formatDecimal(Item.Price, 0, 'COMMA', 2, 'POINT')}"></td>
       <td th:text="${Item.Description}"></td>
       <td>
 
@@ -224,7 +224,7 @@
     </tr>
     <tr th:each="Item : ${MenuItems}" th:if="${Item.Category} == 'dessert'">
       <td th:text="${Item.ItemName}"></td>
-      <td th:text="${Item.Price}"></td>
+      <td th:text="'$'+${#numbers.formatDecimal(Item.Price, 0, 'COMMA', 2, 'POINT')}"></td>
       <td th:text="${Item.Description}"></td>
       <td>
 
